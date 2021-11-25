@@ -11,15 +11,15 @@ public class CharaController : NetworkBehaviour
 {
 //    public float animSpeed = 1.0f;  // アニメーション再生速度設定
 
+    private CharacterController characon;
     private Vector3 Player_pos;     // プレイヤーのポジション
 
     // パラメーター
 //    public float hp = 5.0f;         // 体力
 //    public float attack = 5.0f;     // 攻撃力(技の基礎威力に補正を掛ける値)
-    public float speed = 5.0f;      // 移動速度
-//    public float jump = 5.0f;       // ジャンプ力(初期値)
-//    private float jumpPower;        // ジャンプ力(値変更用)
-//    public float gravity = 0.2f;     // 重力
+    public float speed = 10.0f;      // 移動速度
+    public float jump = 10.0f;       // ジャンプ力(初期値)
+    public float gravity = 15.0f;     // 重力
 
     // キャラクターコントローラ（カプセルコライダ）の参照
 //    private CapsuleCollider col;
@@ -32,12 +32,11 @@ public class CharaController : NetworkBehaviour
 //    private Animator anim;						    	// キャラにアタッチされるアニメーターへの参照
 //    private AnimatorStateInfo currentBaseState;			// base layerで使われる、アニメーターの現在の状態の参照
 
-    // フラグ
-//    private bool flg_jump;           // ジャンプフラグ(true - ジャンプ中、ジャンプ不可/false - ジャンプ可)
 
     // Start is called before the first frame update
     void Start()
     {
+        characon = GetComponent<CharacterController>();
         // Animatorコンポーネントを取得する
 //        anim = GetComponent<Animator>();
 
@@ -50,9 +49,6 @@ public class CharaController : NetworkBehaviour
 //        orgVectColCenter = col.center;
 
         Player_pos = GetComponent<Transform>().position; // 最初のポジションを取得
-
-//        jumpPower = jump;       // ジャンプ力
-//        flg_jump = false;       // ジャンプフラグ
     }
 
     // Update is called once per frame
@@ -60,27 +56,28 @@ public class CharaController : NetworkBehaviour
     {
         if (!isLocalPlayer) return;
 
-        float h = Input.GetAxis("Horizontal");   // x方向のInputの値を取得
-        float v = Input.GetAxis("Vertical");     // z方向のInputの値を取得
+        Player_pos.x = (Input.GetAxis("Horizontal") * speed) ;   // x方向のInputの値を取得
+        Player_pos.z = (Input.GetAxis("Vertical") * speed) ;     // z方向のInputの値を取得
 
         // 移動/回転
-        rb.velocity = new Vector3(h * speed, 0, v * speed);         // 移動
+        characon.Move(Player_pos * Time.deltaTime);
+        // 重力計算
+        Player_pos.y -= gravity * Time.deltaTime;
+
         Vector3 diff = new Vector3(transform.position.x - Player_pos.x, 0, transform.position.z - Player_pos.z);             // 移動幅を求める
         if (diff.magnitude > 0.01f)                                 // 移動していたら向きを変える
         {
             transform.rotation = Quaternion.LookRotation(diff);
         }
-        Player_pos = transform.position;                            // 位置を更新
+//        Player_pos = transform.position;                            // 位置を更新
+
 
         // どのボタンが押されたかチェック
-//        KeyCheck();
-
-        // アクション管理
-//        ActJump();
-    }
+        KeyCheck();
+   }
 
     // ボタンとアクションの対応
-/*    void KeyCheck()
+    void KeyCheck()
     {
         //【 〇　弱攻撃 】
         if (Input.GetKeyDown("joystick button 1"))
@@ -101,13 +98,14 @@ public class CharaController : NetworkBehaviour
         }
 
         //【 ×　ジャンプ 】
-        if (Input.GetKeyDown("joystick button 2"))
+        // 接地しているなら
+        if (characon.isGrounded)
         {
-            Debug.Log("ジャンプ");
-            if (flg_jump == false)
+            // スペースキーでジャンプ
+            if (Input.GetKeyDown(KeyCode.Space))
             {
-                flg_jump = true;
-                jumpPower = jump;
+                // ジャンプ力を設定
+                Player_pos.y = jump;
             }
         }
 
@@ -140,24 +138,4 @@ public class CharaController : NetworkBehaviour
         }
     }
 
-    // ジャンプ
-    void ActJump()
-    {
-        if (flg_jump == true)
-        {
-            rb.AddForce(Vector3.up * jumpPower, ForceMode.VelocityChange);
-            jumpPower -= gravity;
-
-            // 着地判定
-            // レイキャストをキャラクターのセンターから落とす
-            Ray ray = new Ray(transform.position + Vector3.up, Vector3.down);
-            var distance = 1.0f;
-            // 落下中にレイキャストが他オブジェクトと交わったら着地
-            if (jumpPower <= 0 && Physics.Raycast(ray, distance) == true)
-            {
-                Debug.Log("着地した");
-                flg_jump = false;
-            }
-        }
-    }*/
 }

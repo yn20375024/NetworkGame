@@ -4,6 +4,8 @@ ScriptsOnlyBuild:
     - CharaController
     Mirror.Components.dll:
     - Mirror.NetworkTransform
+    Mirror.Editor.dll:
+    - Mirror.NetworkBehaviourInspector
     Mirror.dll:
     - Mirror.NetworkIdentity
     - Mirror.NetworkManager
@@ -46,18 +48,20 @@ ScriptsOnlyBuild:
     - Class: 108
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 11164}
+      Script: {instanceID: 11170}
     - Class: 114
-      Script: {instanceID: 11246}
+      Script: {instanceID: 11252}
     - Class: 114
-      Script: {instanceID: 11370}
+      Script: {instanceID: 11376}
     - Class: 114
-      Script: {instanceID: 12822}
+      Script: {instanceID: 12828}
     - Class: 114
-      Script: {instanceID: 13088}
+      Script: {instanceID: 13096}
     - Class: 114
-      Script: {instanceID: 13268}
+      Script: {instanceID: 13276}
     - Class: 115
+      Script: {instanceID: 0}
+    - Class: 143
       Script: {instanceID: 0}
     - Class: 157
       Script: {instanceID: 0}
@@ -666,7 +670,7 @@ ScriptsOnlyBuild:
     className: TimelineAsset
   - hash:
       serializedVersion: 2
-      Hash: c56a9426da8f5d94d45fd88dc881ef1b
+      Hash: ec05e88c5ae759661d273645103cb69d
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: CharaController
@@ -694,6 +698,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TextMeshProUGUI
+  - hash:
+      serializedVersion: 2
+      Hash: 3ace66deead232e6b46c1b28a13e2ace
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: CameraPosition
   - hash:
       serializedVersion: 2
       Hash: 156c06d8fc35f7818163dc6443d12cd1
@@ -961,4 +971,4 @@ ScriptsOnlyBuild:
   platform: 5
   scenePathNames:
   - Assets/Scenes/GameScene.unity
-  playerPath: "C:/school/\u5352\u696D\u5236\u4F5C/NetworkGame/MirrorTest3/exe/MirrorTest3.exe"
+  playerPath: "C:/Users/koyama/Desktop/\u5352\u696D\u4F5C\u54C1/NetworkGame/MirrorTest3/exe/MirrorTest3.exe"
