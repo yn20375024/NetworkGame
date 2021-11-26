@@ -34,15 +34,12 @@ public class CharaController : NetworkBehaviour
 //    private Animator anim;						    	// キャラにアタッチされるアニメーターへの参照
 //    private AnimatorStateInfo currentBaseState;			// base layerで使われる、アニメーターの現在の状態の参照
 
-    // Start is called before the first frame update
     void Start()
     {
-        if (isLocalPlayer)
-        {
-//            Camera.main.GetComponent<FollowAndLookAtTarget>().Follow = transform;
-            GameObject cManager = GameObject.Find("CameraManager");
-            cManager.GetComponent<FollowAndLookAtTarget>().Follow = transform;
-        }
+        if (!isLocalPlayer) return;
+
+        GameObject cManager = GameObject.Find("CameraManager");
+        cManager.GetComponent<FollowAndLookAtTarget>().Follow = transform;
 
         characon = GetComponent<CharacterController>();
 
@@ -61,7 +58,6 @@ public class CharaController : NetworkBehaviour
         past_pos = Player_pos; // 最初のポジションを取得
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (!isLocalPlayer) return;
@@ -70,10 +66,16 @@ public class CharaController : NetworkBehaviour
         float h = (Input.GetAxis("Horizontal"));   // -1 ~ 1が格納される  マイナス → 左 / プラス → 右
         float v = (Input.GetAxis("Vertical"));     //                     マイナス → 下 / プラス → 上
 
+        // カメラの方向に合わせた正面を設定
+        Vector3 cameraForward = Vector3.Scale(Camera.main.transform.forward, new Vector3(1, 0, 1)).normalized;
+        // カメラの方向に合わせた移動方向を決定
+        Vector3 moveForward = v * cameraForward * speed + h * Camera.main.transform.right * speed;
+
         // 重力計算
         if (!characon.isGrounded) Player_pos.y -= gravity * Time.deltaTime;
         // 移動
-        characon.Move(new Vector3(h * Time.deltaTime * speed, Player_pos.y * Time.deltaTime, v * Time.deltaTime * speed));
+        characon.Move(new Vector3(moveForward.x * Time.deltaTime, Player_pos.y * Time.deltaTime, moveForward.z * Time.deltaTime));
+
         // 回転
         Vector3 diff = new Vector3(transform.position.x - past_pos.x, 0, transform.position.z - past_pos.z);    // 移動幅を求める
         if (diff.magnitude > 0.01f) transform.rotation = Quaternion.LookRotation(diff);                         // 移動していたら向きを変える
