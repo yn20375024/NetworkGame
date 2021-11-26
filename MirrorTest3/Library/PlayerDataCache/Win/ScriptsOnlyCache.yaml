@@ -2,10 +2,9 @@ ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
     - CharaController
+    - FollowAndLookAtTarget
     Mirror.Components.dll:
     - Mirror.NetworkTransform
-    Mirror.Editor.dll:
-    - Mirror.NetworkBehaviourInspector
     Mirror.dll:
     - Mirror.NetworkIdentity
     - Mirror.NetworkManager
@@ -48,18 +47,22 @@ ScriptsOnlyBuild:
     - Class: 108
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 11170}
+      Script: {instanceID: 11166}
     - Class: 114
-      Script: {instanceID: 11252}
+      Script: {instanceID: 11248}
     - Class: 114
-      Script: {instanceID: 11376}
+      Script: {instanceID: 11372}
     - Class: 114
-      Script: {instanceID: 12828}
+      Script: {instanceID: 12824}
     - Class: 114
-      Script: {instanceID: 13096}
+      Script: {instanceID: 13092}
     - Class: 114
-      Script: {instanceID: 13276}
+      Script: {instanceID: 13272}
+    - Class: 114
+      Script: {instanceID: 14936}
     - Class: 115
+      Script: {instanceID: 0}
+    - Class: 136
       Script: {instanceID: 0}
     - Class: 143
       Script: {instanceID: 0}
@@ -700,12 +703,6 @@ ScriptsOnlyBuild:
     className: TextMeshProUGUI
   - hash:
       serializedVersion: 2
-      Hash: 3ace66deead232e6b46c1b28a13e2ace
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: CameraPosition
-  - hash:
-      serializedVersion: 2
       Hash: 156c06d8fc35f7818163dc6443d12cd1
     assemblyName: Mirror.Examples.dll
     namespaceName: Mirror.Examples.NetworkRoom
@@ -968,7 +965,13 @@ ScriptsOnlyBuild:
     assemblyName: Mirror.dll
     namespaceName: kcp2k
     className: KcpTransport
+  - hash:
+      serializedVersion: 2
+      Hash: 7a50af1d224d3dc87f6ad349a0726a8a
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: FollowAndLookAtTarget
   platform: 5
   scenePathNames:
   - Assets/Scenes/GameScene.unity
-  playerPath: "C:/Users/koyama/Desktop/\u5352\u696D\u4F5C\u54C1/NetworkGame/MirrorTest3/exe/MirrorTest3.exe"
+  playerPath: "C:/school/\u5352\u696D\u5236\u4F5C/NetworkGame/MirrorTest3/exe/MirrorTest3.exe"
