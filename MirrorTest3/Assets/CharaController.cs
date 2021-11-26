@@ -12,7 +12,8 @@ public class CharaController : NetworkBehaviour
 //    public float animSpeed = 1.0f;  // アニメーション再生速度設定
 
     private CharacterController characon;
-    private Vector3 Player_pos;     // プレイヤーのポジション
+    private Vector3 Player_pos;        // プレイヤーのポジション
+    private Vector3 past_pos;       // 1つ前のポジション
 
     // パラメーター
 //    public float hp = 5.0f;         // 体力
@@ -32,7 +33,6 @@ public class CharaController : NetworkBehaviour
 //    private Animator anim;						    	// キャラにアタッチされるアニメーターへの参照
 //    private AnimatorStateInfo currentBaseState;			// base layerで使われる、アニメーターの現在の状態の参照
 
-
     // Start is called before the first frame update
     void Start()
     {
@@ -49,6 +49,7 @@ public class CharaController : NetworkBehaviour
 //        orgVectColCenter = col.center;
 
         Player_pos = GetComponent<Transform>().position; // 最初のポジションを取得
+        past_pos = Player_pos; // 最初のポジションを取得
     }
 
     // Update is called once per frame
@@ -56,21 +57,18 @@ public class CharaController : NetworkBehaviour
     {
         if (!isLocalPlayer) return;
 
-        Player_pos.x = (Input.GetAxis("Horizontal") * speed) ;   // x方向のInputの値を取得
-        Player_pos.z = (Input.GetAxis("Vertical") * speed) ;     // z方向のInputの値を取得
+        // 方向キー入力
+        float h = (Input.GetAxis("Horizontal"));   // -1 ~ 1が格納される  マイナス → 左 / プラス → 右
+        float v = (Input.GetAxis("Vertical"));     //                     マイナス → 下 / プラス → 上
 
-        // 移動/回転
-        characon.Move(Player_pos * Time.deltaTime);
         // 重力計算
         Player_pos.y -= gravity * Time.deltaTime;
-
-        Vector3 diff = new Vector3(transform.position.x - Player_pos.x, 0, transform.position.z - Player_pos.z);             // 移動幅を求める
-        if (diff.magnitude > 0.01f)                                 // 移動していたら向きを変える
-        {
-            transform.rotation = Quaternion.LookRotation(diff);
-        }
-//        Player_pos = transform.position;                            // 位置を更新
-
+        // 移動
+        characon.Move(new Vector3(h * Time.deltaTime * speed, Player_pos.y * Time.deltaTime, v * Time.deltaTime * speed));
+        // 回転
+        Vector3 diff = new Vector3(transform.position.x - past_pos.x, 0, transform.position.z - past_pos.z);    // 移動幅を求める
+        if (diff.magnitude > 0.01f) transform.rotation = Quaternion.LookRotation(diff);                         // 移動していたら向きを変える
+        past_pos = transform.position;                                                                          // 位置を更新
 
         // どのボタンが押されたかチェック
         KeyCheck();
@@ -98,11 +96,11 @@ public class CharaController : NetworkBehaviour
         }
 
         //【 ×　ジャンプ 】
-        // 接地しているなら
-        if (characon.isGrounded)
+        // スペースキーでジャンプ
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            // スペースキーでジャンプ
-            if (Input.GetKeyDown(KeyCode.Space))
+            // 接地しているなら
+            if (characon.isGrounded)
             {
                 // ジャンプ力を設定
                 Player_pos.y = jump;
