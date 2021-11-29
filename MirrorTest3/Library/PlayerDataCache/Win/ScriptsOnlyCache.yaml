@@ -47,19 +47,19 @@ ScriptsOnlyBuild:
     - Class: 108
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 11166}
+      Script: {instanceID: 11164}
     - Class: 114
-      Script: {instanceID: 11248}
+      Script: {instanceID: 11246}
     - Class: 114
-      Script: {instanceID: 11372}
+      Script: {instanceID: 11370}
+    - Class: 114
+      Script: {instanceID: 12148}
     - Class: 114
       Script: {instanceID: 12824}
     - Class: 114
-      Script: {instanceID: 13092}
+      Script: {instanceID: 13090}
     - Class: 114
-      Script: {instanceID: 13272}
-    - Class: 114
-      Script: {instanceID: 14936}
+      Script: {instanceID: 13270}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 136
@@ -431,6 +431,12 @@ ScriptsOnlyBuild:
     assemblyName: Mirror.Examples.dll
     namespaceName: Mirror.Examples.MultipleAdditiveScenes
     className: PlayerController
+  - hash:
+      serializedVersion: 2
+      Hash: 7a50af1d224d3dc87f6ad349a0726a8a
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: FollowAndLookAtTarget
   - hash:
       serializedVersion: 2
       Hash: d4020bafcd3ccbb5601a6e6c8ac78be0
@@ -965,12 +971,6 @@ ScriptsOnlyBuild:
     assemblyName: Mirror.dll
     namespaceName: kcp2k
     className: KcpTransport
-  - hash:
-      serializedVersion: 2
-      Hash: 7a50af1d224d3dc87f6ad349a0726a8a
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: FollowAndLookAtTarget
   platform: 5
   scenePathNames:
   - Assets/Scenes/GameScene.unity
