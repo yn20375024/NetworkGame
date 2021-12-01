@@ -71,6 +71,8 @@ public class CharaController : NetworkBehaviour
         // カメラの方向に合わせた移動方向を決定
         Vector3 moveForward = v * cameraForward * speed + h * Camera.main.transform.right * speed;
 
+        DoubleTap();                            // ダブルタップ
+
         // 重力計算
         if (!characon.isGrounded) Player_pos.y -= gravity * Time.deltaTime;
         // 移動
@@ -84,6 +86,70 @@ public class CharaController : NetworkBehaviour
         // どのボタンが押されたかチェック
         KeyCheck();
    }
+
+    private float dtap_NowTime = 0f;                //　最初に移動ボタンが押されてからの経過時間
+    private Vector2 dtap_Direction = Vector2.zero;  //　移動キーの押した方向
+    private int tapCount = 0;
+
+    // 連続タップ検知
+    void DoubleTap()
+    {
+        const float dtap_LimitTime = 0.3f;      //　次に移動ボタンが押されるまでの時間
+        float limitAngle = 3f;                  //　最初に押した方向との違いの限度角度
+
+        float h = Input.GetAxisRaw("Horizontal");
+        float v = Input.GetAxisRaw("Vertical");
+
+        // 1回目押下
+        if (tapCount == 0)
+        {
+            if (h != 0 || v != 0)
+            {
+                //　移動キーの方向ベクトルを取得
+                dtap_Direction = new Vector2(h, v);
+                dtap_NowTime = 0f;
+                tapCount++;
+            }
+        }
+
+        // 1度離す
+        if (tapCount == 1)
+        {
+            if (h == 0 && v == 0)
+            {
+                tapCount++;
+            }
+        }
+
+        // 2回目押下
+        if (tapCount == 2)
+        {
+            if (h != 0 || v != 0)
+            {
+                //　2回目に移動キーを押した時の方向ベクトルを取得
+                var nowDirection = new Vector2(h, v);
+
+                //　押した方向がリミットの角度を越えていない　かつ　制限時間内に移動キーが押されていれば走る
+                if (Vector2.Angle(nowDirection, dtap_Direction) < limitAngle && dtap_NowTime <= dtap_LimitTime)
+                {
+                    Debug.Log("ダブルタップ");
+                    tapCount++;
+                }
+            }
+        }
+
+        //　最初の移動キーを押していれば時間計測
+        if (tapCount != 0)
+        {
+            //　時間計測
+            dtap_NowTime += Time.deltaTime;
+
+            if (dtap_NowTime > dtap_LimitTime)
+            {
+                tapCount = 0;
+            }
+        }
+    }
 
     // ボタンとアクションの対応
     void KeyCheck()
@@ -108,7 +174,7 @@ public class CharaController : NetworkBehaviour
 
         //【 ×　ジャンプ 】
         // スペースキーでジャンプ
-        if (Input.GetKeyDown(KeyCode.Space))
+        if ((Input.GetKeyDown(KeyCode.Space)) || (Input.GetKeyDown("joystick button 2")))
         {
             // 接地しているなら
             if (characon.isGrounded)
