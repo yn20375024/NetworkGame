@@ -42,6 +42,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 81
       Script: {instanceID: 0}
+    - Class: 89
+      Script: {instanceID: 0}
     - Class: 104
       Script: {instanceID: 0}
     - Class: 108
@@ -69,6 +71,8 @@ ScriptsOnlyBuild:
     - Class: 157
       Script: {instanceID: 0}
     - Class: 196
+      Script: {instanceID: 0}
+    - Class: 258
       Script: {instanceID: 0}
   scriptHashData:
   - hash:
@@ -974,4 +978,4 @@ ScriptsOnlyBuild:
   platform: 5
   scenePathNames:
   - Assets/Scenes/GameScene.unity
-  playerPath: "C:/school/\u5352\u696D\u5236\u4F5C/NetworkGame/MirrorTest3/exe/MirrorTest3.exe"
+  playerPath: "C:/School/\u5352\u696D\u5236\u4F5C/Git/NetworkGame/MirrorTest3/exe/MirrorTest3.exe"
