@@ -66,12 +66,19 @@ public class CharaController : NetworkBehaviour
         float h = (Input.GetAxis("Horizontal"));   // -1 ~ 1が格納される  マイナス → 左 / プラス → 右
         float v = (Input.GetAxis("Vertical"));     //                     マイナス → 下 / プラス → 上
 
+        DoubleTap();                            // ダブルタップ
+
         // カメラの方向に合わせた正面を設定
         Vector3 cameraForward = Vector3.Scale(Camera.main.transform.forward, new Vector3(1, 0, 1)).normalized;
         // カメラの方向に合わせた移動方向を決定
         Vector3 moveForward = v * cameraForward * speed + h * Camera.main.transform.right * speed;
 
-        DoubleTap();                            // ダブルタップ
+        // ダブルタップ中のダッシュ移動
+        if (doubletapflg == true)
+        {
+            // カメラの方向に合わせた移動方向を決定
+            moveForward = v * cameraForward * (speed * 10) + h * Camera.main.transform.right * (speed * 10);
+        }
 
         // 重力計算
         if (!characon.isGrounded) Player_pos.y -= gravity * Time.deltaTime;
@@ -90,6 +97,7 @@ public class CharaController : NetworkBehaviour
     private float dtap_NowTime = 0f;                //　最初に移動ボタンが押されてからの経過時間
     private Vector2 dtap_Direction = Vector2.zero;  //　移動キーの押した方向
     private int tapCount = 0;
+    private bool doubletapflg = false;              // ダブルタップのフラグ   false->なし   true->あり
 
     // 連続タップ検知
     void DoubleTap()
@@ -132,6 +140,7 @@ public class CharaController : NetworkBehaviour
                 //　押した方向がリミットの角度を越えていない　かつ　制限時間内に移動キーが押されていれば走る
                 if (Vector2.Angle(nowDirection, dtap_Direction) < limitAngle && dtap_NowTime <= dtap_LimitTime)
                 {
+                    doubletapflg = true;
                     Debug.Log("ダブルタップ");
                     tapCount++;
                 }
@@ -146,6 +155,7 @@ public class CharaController : NetworkBehaviour
 
             if (dtap_NowTime > dtap_LimitTime)
             {
+                doubletapflg = false;
                 tapCount = 0;
             }
         }
