@@ -2,6 +2,7 @@ ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
     - CharaController
+    - FollowAndLookAtTarget
     Mirror.Components.dll:
     - Mirror.NetworkTransform
     Mirror.dll:
@@ -41,6 +42,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 81
       Script: {instanceID: 0}
+    - Class: 89
+      Script: {instanceID: 0}
     - Class: 104
       Script: {instanceID: 0}
     - Class: 108
@@ -52,16 +55,24 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11370}
     - Class: 114
-      Script: {instanceID: 12822}
+      Script: {instanceID: 12148}
     - Class: 114
-      Script: {instanceID: 13088}
+      Script: {instanceID: 12824}
     - Class: 114
-      Script: {instanceID: 13268}
+      Script: {instanceID: 13090}
+    - Class: 114
+      Script: {instanceID: 13270}
     - Class: 115
+      Script: {instanceID: 0}
+    - Class: 136
+      Script: {instanceID: 0}
+    - Class: 143
       Script: {instanceID: 0}
     - Class: 157
       Script: {instanceID: 0}
     - Class: 196
+      Script: {instanceID: 0}
+    - Class: 258
       Script: {instanceID: 0}
   scriptHashData:
   - hash:
@@ -426,6 +437,12 @@ ScriptsOnlyBuild:
     className: PlayerController
   - hash:
       serializedVersion: 2
+      Hash: 7a50af1d224d3dc87f6ad349a0726a8a
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: FollowAndLookAtTarget
+  - hash:
+      serializedVersion: 2
       Hash: d4020bafcd3ccbb5601a6e6c8ac78be0
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
@@ -666,7 +683,7 @@ ScriptsOnlyBuild:
     className: TimelineAsset
   - hash:
       serializedVersion: 2
-      Hash: c56a9426da8f5d94d45fd88dc881ef1b
+      Hash: ec05e88c5ae759661d273645103cb69d
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: CharaController
@@ -961,4 +978,4 @@ ScriptsOnlyBuild:
   platform: 5
   scenePathNames:
   - Assets/Scenes/GameScene.unity
-  playerPath: "C:/school/\u5352\u696D\u5236\u4F5C/NetworkGame/MirrorTest3/exe/MirrorTest3.exe"
+  playerPath: "C:/School/\u5352\u696D\u5236\u4F5C/Git/NetworkGame/MirrorTest3/exe/MirrorTest3.exe"
