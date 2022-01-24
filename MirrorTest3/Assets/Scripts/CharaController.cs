@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 
@@ -15,6 +16,10 @@ public class CharaController : NetworkBehaviour
     private CharacterController characon;
     private Vector3 Player_pos;        // プレイヤーのポジション
     private Vector3 past_pos;          // 1つ前のポジション
+
+    private Animator m_Animator;        // アニメーター
+    private bool jumpflg = false;       // ジャンプ着地フラグ
+    public int lrcheck2 = 0;             // L2R2チェック
 
     // パラメーター
 //    public float hp = 5.0f;         // 体力
@@ -43,8 +48,9 @@ public class CharaController : NetworkBehaviour
 
         characon = GetComponent<CharacterController>();
 
-        // Animatorコンポーネントを取得する
-//        anim = GetComponent<Animator>();
+        //変数animに、Animatorコンポーネントを設定する
+//        anim = gameObject.GetComponent<Animator>();
+        m_Animator = GetComponent<Animator>();
 
         // CapsuleColliderコンポーネントを取得する（カプセル型コリジョン）
 //        col = GetComponent<CapsuleCollider>();
@@ -66,7 +72,28 @@ public class CharaController : NetworkBehaviour
         float h = (Input.GetAxis("Horizontal"));   // -1 ~ 1が格納される  マイナス → 左 / プラス → 右
         float v = (Input.GetAxis("Vertical"));     //                     マイナス → 下 / プラス → 上
 
+        // 停止->歩きアニメーション
+        if ((h == 0.0) && (v == 0.0) )
+        {
+            m_Animator.SetInteger("WalkTrigger", 2);
+        }
+        else
+        {
+            m_Animator.SetInteger("WalkTrigger", 1);
+        }
+
         DoubleTap();                            // ダブルタップ
+
+        if (doubletapflg == true)
+        {
+            // ダッシュアニメーションfalse
+            m_Animator.SetInteger("DashTrigger", 1);
+        }
+        else
+        {
+            // ダッシュアニメーションfalse
+            m_Animator.SetInteger("DashTrigger", 2);
+        }
 
         // カメラの方向に合わせた正面を設定
         Vector3 cameraForward = Vector3.Scale(Camera.main.transform.forward, new Vector3(1, 0, 1)).normalized;
@@ -92,7 +119,29 @@ public class CharaController : NetworkBehaviour
 
         // どのボタンが押されたかチェック
         KeyCheck();
-   }
+
+        // ジャンプ処理
+        if ((jumpflg == true) && (characon.isGrounded))
+        {
+            m_Animator.SetTrigger("JumpOut");
+            m_Animator.SetTrigger("Stay");
+            jumpflg = true;
+        }
+
+        // L2R2アニメーション
+        if (lrcheck2 == 1)
+        {
+            m_Animator.SetInteger("Guard", 1);
+        }
+        else if (lrcheck2 == 2)
+        {
+            m_Animator.SetInteger("Ult", 1); 
+        }else
+        {
+            m_Animator.SetInteger("Guard", 2);
+            m_Animator.SetInteger("Ult", 2);
+        }
+    }
 
     private float dtap_NowTime = 0f;                //　最初に移動ボタンが押されてからの経過時間
     private Vector2 dtap_Direction = Vector2.zero;  //　移動キーの押した方向
@@ -167,18 +216,30 @@ public class CharaController : NetworkBehaviour
         //【 〇　弱攻撃 】
         if (Input.GetKeyDown("joystick button 1"))
         {
+            m_Animator.SetTrigger("jab1");
+            m_Animator.SetTrigger("jab2");
+            m_Animator.SetTrigger("jab3");
             Debug.Log("弱攻撃");
         }
 
         //【 △　強攻撃１ 】
         if (Input.GetKeyDown("joystick button 0"))
         {
+            m_Animator.SetInteger("Tilt1", 1);
             Debug.Log("強攻撃１");
+        }
+        else
+        {
+            m_Animator.SetInteger("Tilt1", 2);
         }
 
         //【 □　強攻撃２ 】
         if (Input.GetKeyDown("joystick button 3"))
         {
+            m_Animator.SetTrigger("Tilt2_1");
+            m_Animator.SetTrigger("Tilt2_2");
+            m_Animator.SetTrigger("Tilt2_3");
+            m_Animator.SetTrigger("Tilt2_4");
             Debug.Log("強攻撃２");
         }
 
@@ -186,6 +247,9 @@ public class CharaController : NetworkBehaviour
         // スペースキーでジャンプ
         if ((Input.GetKeyDown(KeyCode.Space)) || (Input.GetKeyDown("joystick button 2")))
         {
+            m_Animator.SetTrigger("JumpIn");
+            m_Animator.SetTrigger("JumpLoop");
+            jumpflg = true;
             // 接地しているなら
             if (characon.isGrounded)
             {
@@ -197,30 +261,48 @@ public class CharaController : NetworkBehaviour
         //【 L2+R2　必殺技 】
         if (Input.GetKeyDown("joystick button 4") && Input.GetKeyDown("joystick button 5"))
         {
+            lrcheck2 = 2;
             Debug.Log("必殺技");
         }
-        //【 L2　ガード 】
-        else if (Input.GetKeyDown("joystick button 4"))
-        {
-            Debug.Log("ガード");
-        }
-        //【 R2　投げ 】
+        //【 R2　ダッシュ 】
         else if (Input.GetKeyDown("joystick button 5"))
         {
+            doubletapflg = true;
             Debug.Log("投げ");
+        }
+        //【 L2　ガード 下げ】
+        else if (Input.GetKeyDown("joystick button 4"))
+        {
+            lrcheck2 = 1;
+            Debug.Log("ガード");
+        }
+        //【 L2　ガード 上げ】
+        else if (Input.GetKeyUp("joystick button 4"))
+        {
+            lrcheck2 = 0;
         }
 
         //【 L1　ターゲット切り替え左 】
         if (Input.GetKeyDown("joystick button 6"))
         {
+            m_Animator.SetBool("Win", true);
             Debug.Log("ターゲット切り替え左");
         }
 
         //【 R1　ターゲット切り替え右 】
         if (Input.GetKeyDown("joystick button 7"))
         {
+            m_Animator.SetBool("Win", false);
             Debug.Log("ターゲット切り替え右");
         }
     }
 
+    /* ------------------------------------------------ */
+      // ダメージアニメーション      
+            //m_Animator.SetTrigger("damage1");
+            //m_Animator.SetTrigger("damage2");
+            //m_Animator.SetTrigger("damage3");
+            //m_Animator.SetTrigger("damage4");
+    /* ------------------------------------------------ */
 }
+
