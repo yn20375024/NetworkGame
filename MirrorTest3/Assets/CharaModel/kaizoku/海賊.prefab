@@ -1487,7 +1487,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6036681230032708012}
-  - component: {fileID: -6734946776328931759}
   - component: {fileID: -2625377160688289449}
   - component: {fileID: 3180806821824360568}
   - component: {fileID: -109407827003655689}
@@ -1518,19 +1517,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &-6734946776328931759
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7322219953468789695}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 10, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &-2625377160688289449
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1558,13 +1544,13 @@ CharacterController:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Height: 2
-  m_Radius: 0.5
+  m_Height: 8
+  m_Radius: 2
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 3.5, z: 0.5}
 --- !u!114 &-109407827003655689
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1646,7 +1632,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7322219953468789695}
-  m_Mesh: {fileID: 2896502698340991891, guid: 124f31f83bf6e24469d488aa686375c0, type: 3}
+  m_Mesh: {fileID: 2896502698340991891, guid: 96165e0a8bf2ddc44939d49e2f8688db, type: 3}
 --- !u!95 &3448748386726585008
 Animator:
   serializedVersion: 3
