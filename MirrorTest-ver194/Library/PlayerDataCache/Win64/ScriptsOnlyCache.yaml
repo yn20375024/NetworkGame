@@ -1,7 +1,7 @@
 ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
-    - CharaController
+    - CharaController2
     - FollowAndLookAtTarget
     Mirror.Components.dll:
     - Mirror.NetworkAnimator
@@ -48,8 +48,6 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 48
       Script: {instanceID: 0}
-    - Class: 54
-      Script: {instanceID: 0}
     - Class: 65
       Script: {instanceID: 0}
     - Class: 74
@@ -79,11 +77,11 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 13010}
     - Class: 114
-      Script: {instanceID: 13456}
-    - Class: 114
       Script: {instanceID: 13780}
     - Class: 114
       Script: {instanceID: 13998}
+    - Class: 114
+      Script: {instanceID: 16054}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 136
@@ -747,6 +745,12 @@ ScriptsOnlyBuild:
     assemblyName: Mirror.dll
     namespaceName: kcp2k
     className: KcpTransport
+  - hash:
+      serializedVersion: 2
+      Hash: b5f0f83dc4121ae016c48bb1145064b3
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: CharaController2
   platform: 19
   scenePathNames:
   - Assets/Scenes/GameScene.unity
