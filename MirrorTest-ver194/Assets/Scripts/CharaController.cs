@@ -40,6 +40,7 @@ public class CharaController : NetworkBehaviour
 
     void Start()
     {
+        //ローカルプレイヤーの時のみ以下の処理を行う
         if (!isLocalPlayer) return;
 
         GameObject cManager = GameObject.Find("CameraManager");
@@ -64,6 +65,7 @@ public class CharaController : NetworkBehaviour
 
     void Update()
     {
+        //ローカルプレイヤーの時のみ以下の処理を行う
         if (!isLocalPlayer) return;
 
         // 方向キー入力

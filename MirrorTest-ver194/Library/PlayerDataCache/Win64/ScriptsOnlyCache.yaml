@@ -6,6 +6,8 @@ ScriptsOnlyBuild:
     Mirror.Components.dll:
     - Mirror.NetworkAnimator
     - Mirror.NetworkTransform
+    Mirror.Editor.dll:
+    - Mirror.NetworkBehaviourInspector
     Mirror.dll:
     - Mirror.NetworkIdentity
     - Mirror.NetworkManager
@@ -45,8 +47,6 @@ ScriptsOnlyBuild:
     - Class: 43
       Script: {instanceID: 0}
     - Class: 48
-      Script: {instanceID: 0}
-    - Class: 54
       Script: {instanceID: 0}
     - Class: 65
       Script: {instanceID: 0}
@@ -748,4 +748,4 @@ ScriptsOnlyBuild:
   platform: 19
   scenePathNames:
   - Assets/Scenes/GameScene.unity
-  playerPath: "C:/Users/koyama/Desktop/\u7DE8\u96C6/MirrorTest-ver194/exe/MirrorTest3.exe"
+  playerPath: "C:/School/\u5352\u696D\u5236\u4F5C/\u4F5C\u696D\u30D5\u30A9\u30EB\u30C0/Unity\u30C7\u30FC\u30BF/MirrorTest-ver194/exe/MirrorTest3.exe"
