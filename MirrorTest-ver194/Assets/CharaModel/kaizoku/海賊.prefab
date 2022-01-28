@@ -1489,12 +1489,12 @@ GameObject:
   - component: {fileID: 6036681230032708012}
   - component: {fileID: 3180806821824360568}
   - component: {fileID: -109407827003655689}
+  - component: {fileID: -9148124051249616517}
   - component: {fileID: -5112291062666536017}
   - component: {fileID: 4387025285161887688}
   - component: {fileID: 3448748386726585008}
   - component: {fileID: -4851619966890250033}
-  - component: {fileID: -6549103764220683830}
-  - component: {fileID: -2382659383547159184}
+  - component: {fileID: 7953341611537266084}
   m_Layer: 0
   m_Name: "\u6D77\u8CCA"
   m_TagString: Untagged
@@ -1553,6 +1553,24 @@ MonoBehaviour:
   visible: 0
   m_AssetId: b1090d15e7466c1498aa3575474a218c
   hasSpawned: 0
+--- !u!114 &-9148124051249616517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7322219953468789695}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2511bd1b87c54a844820603d0dbe5e0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  lrcheck2: 0
+  speed: 10
+  jump: 10
+  gravity: 15
 --- !u!23 &-5112291062666536017
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1612,7 +1630,7 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: da23b71bc4aa59f40836d2008c9801ed, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 1
+  m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
@@ -1646,14 +1664,14 @@ MonoBehaviour:
   catchupThreshold: 4
   catchupMultiplier: 1
   onlySyncOnChange: 0
-  bufferResetMultiplier: 1
+  bufferResetMultiplier: 5
   positionSensitivity: 0.01
   rotationSensitivity: 0.01
   scaleSensitivity: 0.01
   showGizmos: 0
   showOverlay: 0
   overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
---- !u!114 &-6549103764220683830
+--- !u!114 &7953341611537266084
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1666,27 +1684,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   syncMode: 0
-  syncInterval: 0.001
-  clientAuthority: 1
-  animator: {fileID: 3448748386726585008}
---- !u!114 &-2382659383547159184
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7322219953468789695}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d2bf9b925b23f841b47933aa254be44, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
   syncInterval: 0.1
-  lrcheck2: 0
-  speed: 10
-  jump: 10
-  gravity: 15
+  clientAuthority: 0
+  animator: {fileID: 3448748386726585008}
 --- !u!1 &7445969048451544067
 GameObject:
   m_ObjectHideFlags: 0

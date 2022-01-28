@@ -1,13 +1,11 @@
 ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
-    - CharaController2
+    - CharaController
     - FollowAndLookAtTarget
     Mirror.Components.dll:
     - Mirror.NetworkAnimator
     - Mirror.NetworkTransform
-    Mirror.Editor.dll:
-    - Mirror.NetworkBehaviourInspector
     Mirror.dll:
     - Mirror.NetworkIdentity
     - Mirror.NetworkManager
@@ -48,6 +46,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 48
       Script: {instanceID: 0}
+    - Class: 54
+      Script: {instanceID: 0}
     - Class: 65
       Script: {instanceID: 0}
     - Class: 74
@@ -77,11 +77,11 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 13010}
     - Class: 114
+      Script: {instanceID: 13456}
+    - Class: 114
       Script: {instanceID: 13780}
     - Class: 114
       Script: {instanceID: 13998}
-    - Class: 114
-      Script: {instanceID: 16054}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 136
@@ -745,13 +745,7 @@ ScriptsOnlyBuild:
     assemblyName: Mirror.dll
     namespaceName: kcp2k
     className: KcpTransport
-  - hash:
-      serializedVersion: 2
-      Hash: b5f0f83dc4121ae016c48bb1145064b3
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: CharaController2
   platform: 19
   scenePathNames:
   - Assets/Scenes/GameScene.unity
-  playerPath: "C:/School/\u5352\u696D\u5236\u4F5C/\u4F5C\u696D\u30D5\u30A9\u30EB\u30C0/Unity\u30C7\u30FC\u30BF/MirrorTest-ver194/exe/MirrorTest3.exe"
+  playerPath: "C:/Users/koyama/Desktop/\u7DE8\u96C6/MirrorTest-ver194/exe/MirrorTest3.exe"

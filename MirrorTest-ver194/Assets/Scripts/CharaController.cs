@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+//using UnityEngine.Networking;
 using Mirror;
 
 // 必要なコンポーネントを自動追加
@@ -16,7 +17,7 @@ public class CharaController : NetworkBehaviour
     private Vector3 Player_pos;        // プレイヤーのポジション
     private Vector3 past_pos;          // 1つ前のポジション
 
-    private NetworkAnimator m_NAnimator;        // アニメーター
+    private NetworkAnimator m_Animator;        // アニメーター
     private bool jumpflg = false;       // ジャンプ着地フラグ
     public int lrcheck2 = 0;             // L2R2チェック
 
@@ -48,7 +49,7 @@ public class CharaController : NetworkBehaviour
 
         //変数animに、Animatorコンポーネントを設定する
 //        anim = gameObject.GetComponent<Animator>();
-        m_NAnimator = GetComponent<NetworkAnimator>();
+        m_Animator = GetComponent<NetworkAnimator>();
 
         // CapsuleColliderコンポーネントを取得する（カプセル型コリジョン）
 //        col = GetComponent<CapsuleCollider>();
@@ -72,25 +73,25 @@ public class CharaController : NetworkBehaviour
         // 停止->歩きアニメーション
         if ((h == 0.0) && (v == 0.0) )
         {
-            m_NAnimator.SetTrigger("Stay");
+            m_Animator.animator.SetInteger("WalkTrigger", 2);
         }
         else
         {
-            m_NAnimator.SetTrigger("walktrigger");
+            m_Animator.animator.SetInteger("WalkTrigger", 1);
         }
 
         DoubleTap();                            // ダブルタップ
 
-        if (doubletapflg == true)
-        {
-            // ダッシュアニメーションfalse
-            m_NAnimator.animator.SetInteger("DashTrigger", 1);
-        }
-        else
-        {
-            // ダッシュアニメーションfalse
-            m_NAnimator.animator.SetInteger("DashTrigger", 2);
-        }
+        //if (doubletapflg == true)
+        //{
+        //    // ダッシュアニメーションfalse
+        //    m_Animator.animator.SetInteger("DashTrigger", 1);
+        //}
+        //else
+        //{
+        //    // ダッシュアニメーションfalse
+        //    m_Animator.SetInteger("DashTrigger", 2);
+        //}
 
         // カメラの方向に合わせた正面を設定
         Vector3 cameraForward = Vector3.Scale(Camera.main.transform.forward, new Vector3(1, 0, 1)).normalized;
@@ -120,24 +121,24 @@ public class CharaController : NetworkBehaviour
         // ジャンプ処理
         if ((jumpflg == true) && (characon.isGrounded))
         {
-            m_NAnimator.animator.SetTrigger("JumpOut");
-            m_NAnimator.animator.SetTrigger("Stay");
+            m_Animator.SetTrigger("JumpOut");
+            m_Animator.SetTrigger("Stay");
             jumpflg = true;
         }
 
         // L2R2アニメーション
-        if (lrcheck2 == 1)
-        {
-            m_NAnimator.animator.SetInteger("Guard", 1);
-        }
-        else if (lrcheck2 == 2)
-        {
-            m_NAnimator.animator.SetInteger("Ult", 1); 
-        }else
-        {
-            m_NAnimator.animator.SetInteger("Guard", 2);
-            m_NAnimator.animator.SetInteger("Ult", 2);
-        }
+        //if (lrcheck2 == 1)
+        //{
+        //    m_Animator.SetInteger("Guard", 1);
+        //}
+        //else if (lrcheck2 == 2)
+        //{
+        //    m_Animator.SetInteger("Ult", 1); 
+        //}else
+        //{
+        //    m_Animator.SetInteger("Guard", 2);
+        //    m_Animator.SetInteger("Ult", 2);
+        //}
     }
 
     private float dtap_NowTime = 0f;                //　最初に移動ボタンが押されてからの経過時間
@@ -213,30 +214,30 @@ public class CharaController : NetworkBehaviour
         //【 〇　弱攻撃 】
         if (Input.GetKeyDown("joystick button 1"))
         {
-            m_NAnimator.SetTrigger("jab1");
-            m_NAnimator.SetTrigger("jab2");
-            m_NAnimator.SetTrigger("jab3");
+            //m_Animator.SetTrigger("jab1");
+            //m_Animator.SetTrigger("jab2");
+            //m_Animator.SetTrigger("jab3");
             Debug.Log("弱攻撃");
         }
 
         //【 △　強攻撃１ 】
         if (Input.GetKeyDown("joystick button 0"))
         {
-            m_NAnimator.animator.SetInteger("Tilt1", 1);
+            //m_Animator.SetInteger("Tilt1", 1);
             Debug.Log("強攻撃１");
         }
-        else
-        {
-            m_NAnimator.animator.SetInteger("Tilt1", 2);
-        }
+        //else
+        //{
+        //    m_Animator.SetInteger("Tilt1", 2);
+        //}
 
         //【 □　強攻撃２ 】
         if (Input.GetKeyDown("joystick button 3"))
         {
-            m_NAnimator.SetTrigger("Tilt2_1");
-            m_NAnimator.SetTrigger("Tilt2_2");
-            m_NAnimator.SetTrigger("Tilt2_3");
-            m_NAnimator.SetTrigger("Tilt2_4");
+            //m_Animator.SetTrigger("Tilt2_1");
+            //m_Animator.SetTrigger("Tilt2_2");
+            //m_Animator.SetTrigger("Tilt2_3");
+            //m_Animator.SetTrigger("Tilt2_4");
             Debug.Log("強攻撃２");
         }
 
@@ -244,8 +245,8 @@ public class CharaController : NetworkBehaviour
         // スペースキーでジャンプ
         if ((Input.GetKeyDown(KeyCode.Space)) || (Input.GetKeyDown("joystick button 2")))
         {
-            m_NAnimator.SetTrigger("JumpIn");
-            m_NAnimator.SetTrigger("JumpLoop");
+            m_Animator.SetTrigger("JumpIn");
+            m_Animator.SetTrigger("JumpLoop");
             jumpflg = true;
             // 接地しているなら
             if (characon.isGrounded)
@@ -282,24 +283,24 @@ public class CharaController : NetworkBehaviour
         //【 L1　ターゲット切り替え左 】
         if (Input.GetKeyDown("joystick button 6"))
         {
-            m_NAnimator.animator.SetBool("Win", true);
+            //m_Animator.SetBool("Win", true);
             Debug.Log("ターゲット切り替え左");
         }
 
         //【 R1　ターゲット切り替え右 】
         if (Input.GetKeyDown("joystick button 7"))
         {
-            m_NAnimator.animator.SetBool("Win", false);
+            //m_Animator.SetBool("Win", false);
             Debug.Log("ターゲット切り替え右");
         }
     }
 
     /* ------------------------------------------------ */
       // ダメージアニメーション      
-            //m_NAnimator.SetTrigger("damage1");
-            //m_NAnimator.SetTrigger("damage2");
-            //m_NAnimator.SetTrigger("damage3");
-            //m_NAnimator.SetTrigger("damage4");
+            //m_Animator.SetTrigger("damage1");
+            //m_Animator.SetTrigger("damage2");
+            //m_Animator.SetTrigger("damage3");
+            //m_Animator.SetTrigger("damage4");
     /* ------------------------------------------------ */
 }
 
