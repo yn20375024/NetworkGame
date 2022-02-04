@@ -6,8 +6,6 @@ ScriptsOnlyBuild:
     Mirror.Components.dll:
     - Mirror.NetworkAnimator
     - Mirror.NetworkTransform
-    Mirror.Editor.dll:
-    - Mirror.NetworkBehaviourInspector
     Mirror.dll:
     - Mirror.NetworkIdentity
     - Mirror.NetworkManager
@@ -19,6 +17,7 @@ ScriptsOnlyBuild:
     UnityEditor.Graphs.dll:
     - UnityEditor.Graphs.AnimationBlendTree.Graph
     - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.AnimatorStateTransitionInspector
     - UnityEditor.Graphs.AnimationStateMachine.AnyStateNode
     - UnityEditor.Graphs.AnimationStateMachine.Graph
     - UnityEditor.Graphs.AnimationStateMachine.GraphGUI
@@ -748,4 +747,4 @@ ScriptsOnlyBuild:
   platform: 19
   scenePathNames:
   - Assets/Scenes/GameScene.unity
-  playerPath: "C:/School/\u5352\u696D\u5236\u4F5C/\u4F5C\u696D\u30D5\u30A9\u30EB\u30C0/Unity\u30C7\u30FC\u30BF/MirrorTest-ver194/exe/MirrorTest3.exe"
+  playerPath: "C:/Users/koyama/Desktop/\u7DE8\u96C6/MirrorTest-ver194/exe/MirrorTest3.exe"
