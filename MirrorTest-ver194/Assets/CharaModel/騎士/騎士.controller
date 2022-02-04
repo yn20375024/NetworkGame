@@ -259,7 +259,7 @@ AnimatorStateTransition:
   serializedVersion: 3
   m_TransitionDuration: 0.008418202
   m_TransitionOffset: 0
-  m_ExitTime: 0.99130434
+  m_ExitTime: 0.9901511
   m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
@@ -436,10 +436,10 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.14328974
+  m_TransitionDuration: 0.20219201
   m_TransitionOffset: 0
-  m_ExitTime: 0.8118103
-  m_HasExitTime: 1
+  m_ExitTime: 0.74112755
+  m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
@@ -578,9 +578,9 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.036077585
+  m_TransitionDuration: 0.03607759
   m_TransitionOffset: 0
-  m_ExitTime: 0.37248993
+  m_ExitTime: 0.41352907
   m_HasExitTime: 1
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
@@ -618,7 +618,7 @@ AnimatorStateMachine:
     m_Position: {x: 460, y: -130, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -7827765130378337185}
-    m_Position: {x: 460, y: -200, z: 0}
+    m_Position: {x: 460, y: -210, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 6170691204131001640}
     m_Position: {x: 460, y: -270, z: 0}
@@ -1065,7 +1065,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: ult
-  m_Speed: 1.5
+  m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -9207083426441874083}
@@ -1180,10 +1180,10 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.005871904
+  m_TransitionDuration: 0.0022155168
   m_TransitionOffset: 0
-  m_ExitTime: 0.6409637
-  m_HasExitTime: 1
+  m_ExitTime: 0.8387014
+  m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
@@ -1283,9 +1283,9 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.108902246
+  m_TransitionDuration: 0.108902216
   m_TransitionOffset: 0
-  m_ExitTime: 0.75000006
+  m_ExitTime: 0.8852699
   m_HasExitTime: 1
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
@@ -1352,7 +1352,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: damage3
-  m_Speed: 1
+  m_Speed: 0.4
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 5695169941500588565}

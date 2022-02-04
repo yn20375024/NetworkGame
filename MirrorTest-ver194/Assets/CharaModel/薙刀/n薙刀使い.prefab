@@ -215,7 +215,7 @@ SkinnedMeshRenderer:
   - {fileID: 9023527330954092183, guid: bd59fb00e1369784487fe170f2fd3b64, type: 3}
   - {fileID: 7395441385656591920, guid: bd59fb00e1369784487fe170f2fd3b64, type: 3}
   - {fileID: -8747665389337035531, guid: bd59fb00e1369784487fe170f2fd3b64, type: 3}
-  - {fileID: -6203154527825591024, guid: bd59fb00e1369784487fe170f2fd3b64, type: 3}
+  - {fileID: 2100000, guid: 3e246699b9bb88f42b97a09b331580f1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -481,7 +481,7 @@ GameObject:
   - component: {fileID: -1309298062352673681}
   m_Layer: 0
   m_Name: "n\u8599\u5200\u4F7F\u3044"
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
