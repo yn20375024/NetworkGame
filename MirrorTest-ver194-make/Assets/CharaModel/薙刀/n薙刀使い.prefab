@@ -703,12 +703,15 @@ MonoBehaviour:
     type: 3}
   effectPrefab4: {fileID: 3581913416877342026, guid: bf383e9ea5ca3a54c9af100ced8fed78,
     type: 3}
-  effectPrefab5: {fileID: 6758744867127678711, guid: aec4f1bb84837f84ca9cbecbcb844bc1,
+  effectPrefab5: {fileID: 6758744867127678711, guid: be37f70e0bc6d57419de3ff3bc4179b9,
     type: 3}
   effectPrefab6: {fileID: 6829751723222981306, guid: 1d4d415993a984c4992b13efc0607d5f,
     type: 3}
-  effectPrefab7: {fileID: 0}
+  effectPrefab7: {fileID: 6758744867127678711, guid: aec4f1bb84837f84ca9cbecbcb844bc1,
+    type: 3}
   effectPrefab8: {fileID: 0}
+  effectPrefab9: {fileID: 0}
+  effectPrefab10: {fileID: 0}
 --- !u!1 &1241455575617471806
 GameObject:
   m_ObjectHideFlags: 0

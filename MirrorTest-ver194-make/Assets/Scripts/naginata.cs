@@ -20,7 +20,7 @@ public class naginata : NetworkBehaviour
     //    public float hp = 5.0f;         // 体力
     //    public float attack = 5.0f;     // 攻撃力(技の基礎威力に補正を掛ける値)
     public float speed = 10.0f;      // 移動速度
-    public float jump = 10.0f;       // ジャンプ力(初期値)
+    public float jump = 15.0f;       // ジャンプ力(初期値)
 
     private PlayerTargetController PT_Control;        // ターゲット
     private PlayerEffectController PE_Control;
@@ -37,6 +37,7 @@ public class naginata : NetworkBehaviour
 
     Vector3 cameraForward;
     Vector3 moveForward;
+    Vector3 dashForward;
 
     void Start()
     {
@@ -61,12 +62,12 @@ public class naginata : NetworkBehaviour
     void FixedUpdate() {
         //ローカルプレイヤーの時のみ以下の処理を行う
         if (!isLocalPlayer) return;
-        //方向キー入力時のみ移動
-        if ((horizontal != 0.0) || (vertical != 0.0))
-        {
-            // 移動
-            rb.velocity = new Vector3(moveForward.x, rb.velocity.y, moveForward.z);
 
+        //歩き、ジャンプ中で方向キー入力時、またはdashの時のみ移動
+        if (((horizontal != 0.0) || (vertical != 0.0)) || (PE_Control.getAnim() == "dash"))
+        {
+            rb.velocity = new Vector3(moveForward.x + dashForward.x, rb.velocity.y, moveForward.z + dashForward.z);           
+            
             // 回転
             Vector3 diff = new Vector3(rb.position.x - past_pos.x, 0, rb.position.z - past_pos.z);           // 移動幅を求める
             if (diff.magnitude > 0.01f) rb.rotation = Quaternion.LookRotation(diff);                         // 移動していたら向きを変える
@@ -74,10 +75,14 @@ public class naginata : NetworkBehaviour
             m_Animator.animator.SetInteger("WalkTrigger", 1);
         }
         //入力ない時回転速度ゼロ
-        else 
+        else
         {
             rb.angularVelocity = Vector3.zero;
-            m_Animator.animator.SetInteger("WalkTrigger", 2);
+        }
+
+        if ((PE_Control.getAnim() == "jumploop_up") || (PE_Control.getAnim() == "jumploop_down")) 
+        {
+            rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y - 0.5f, rb.velocity.z);
         }
     }
 
@@ -87,62 +92,105 @@ public class naginata : NetworkBehaviour
         //ローカルプレイヤーの時のみ以下の処理を行う
         if (!isLocalPlayer) return;
 
-        // 方向キー入力
-        horizontal = (Input.GetAxis("Horizontal"));   // -1 ~ 1が格納される  マイナス → 左 / プラス → 右
-        vertical = (Input.GetAxis("Vertical"));     //                     マイナス → 下 / プラス → 上
-
-        //物理マテリアルの変更
-        if ((checkIsGround(rb.position, 0.3f) == true))
-        {
-            capsuleCollider.material = slip;
-        }
-        else 
-        {
-            capsuleCollider.material = nonslip;
-        }
-
-        DoubleTap();                            // ダブルタップ
-        if (doubletapflg == true)
-        {
-            // ダッシュアニメーションtrue
-            m_Animator.animator.SetInteger("DashTrigger", 1);
-        }
-        else
-        {
-            // ダッシュアニメーションfalse
-            m_Animator.animator.SetInteger("DashTrigger", 2);
-        }
-
+        /*--------------------------------------
+         物理挙動
+         --------------------------------------*/
         // カメラの方向に合わせた正面を設定
         cameraForward = Vector3.Scale(Camera.main.transform.forward, new Vector3(1, 0, 1)).normalized;
         // カメラの方向に合わせた移動方向を決定
         moveForward = vertical * cameraForward * speed + horizontal * Camera.main.transform.right * speed;
 
-        // ダブルタップ中のダッシュ移動
-        if (doubletapflg == true)
-        {
-            // カメラの方向に合わせた移動方向を決定
-            moveForward = vertical * cameraForward * (speed * 10) + horizontal * Camera.main.transform.right * (speed * 10);
+        //ダッシュする速度。ダッシュなら移動速度に加算
+        if (PE_Control.getAnim() == "dash"){
+            dashForward = rb.transform.forward * 30;
+        }
+        else {
+            dashForward = Vector3.zero;
         }
 
-        // どのボタンが押されたかチェック
-        KeyCheck();
+        Debug.Log(dashForward);
 
-        // ジャンプ着地処理
-        if(m_Animator.animator.GetInteger("Jump_Seq") == 1 ){
+        //物理マテリアルの変更
+        if ((checkIsGround(rb.position, 0.3f) == true))
+        {
+            //地面なら滑らない
+            capsuleCollider.material = nonslip;
+        }
+        else
+        {
+            //空中なら滑る
+            capsuleCollider.material = slip;
+        }
+
+        /*--------------------------------------
+         アニメーション常時処理
+         --------------------------------------*/
+        //静止常時処理
+        if (PE_Control.getAnim() == "stay") 
+        {
+            //上下左右キー入力を受け付ける
+            horizontal = (Input.GetAxis("Horizontal")); 
+            vertical = (Input.GetAxis("Vertical"));
+            //入力があるならwalkにする
+            if (((horizontal != 0.0f) || (vertical != 0.0f)))
+            {
+                m_Animator.animator.SetInteger("WalkTrigger", 1);
+            }
+            //ダブルタップならdashにする
+            if (doubletapflg == true)
+            {
+                m_Animator.animator.SetBool("Dash_Flg", true);
+            }
+        }
+        //歩行常時処理
+        else if (PE_Control.getAnim() == "walk")
+        {
+            //上下左右キー入力を受け付ける
+            horizontal = (Input.GetAxis("Horizontal"));
+            vertical = (Input.GetAxis("Vertical"));
+            //ダブルタップならdashにする
+            if (doubletapflg == true)
+            {
+                m_Animator.animator.SetBool("Dash_Flg", true);
+            }
+            //入力が無ければstayにする
+            if ((horizontal == 0.0f) && (vertical == 0.0f))
+            {
+                m_Animator.animator.SetInteger("WalkTrigger", 2);
+            }
+        }
+        else if ((PE_Control.getAnim() == "jumploop_up") || (PE_Control.getAnim() == "jumploop_down")) 
+        {
+            //上下左右キー入力を受け付ける
+            horizontal = (Input.GetAxis("Horizontal"));
+            vertical = (Input.GetAxis("Vertical"));
+        }
+        else
+        {
+            horizontal = 0.0f;
+            vertical = 0.0f;
+        }
+
+        // ジャンプ常時処理
+        if (m_Animator.animator.GetInteger("Jump_Seq") == 1)
+        {
             //飛び上がり
-            if(rb.velocity.y <= 0){
+            if (rb.velocity.y < 0)
+            {
                 m_Animator.animator.SetInteger("Jump_Seq", 2);
             }
-        }else if(m_Animator.animator.GetInteger("Jump_Seq") == 2 ){
+        }
+        else if (m_Animator.animator.GetInteger("Jump_Seq") == 2)
+        {
             //着地
-            if(rb.velocity.y == 0){
+            if ((rb.velocity.y == 0) || (checkIsGround(rb.position, 0.3f) == true))
+            {
                 m_Animator.animator.SetInteger("Jump_Seq", 3);
             }
-        }else{
-            //stayに戻る
-            m_Animator.animator.SetInteger("Jump_Seq", 0);
         }
+
+        DoubleTap();        //ダブルタップ
+        KeyCheck();         //キーチェック
 
         // 吹き飛び着地処理
         if (m_Animator.animator.GetInteger("Damage2-3_Seq") == 1)
@@ -198,6 +246,12 @@ public class naginata : NetworkBehaviour
         {
             m_Animator.animator.SetBool("Tlit2_Counter_Flg", false);
         }
+        //end時、アニメーションのフラグをfalseにする
+        if (PE_Control.getAnim() == "dashend")
+        {
+            m_Animator.animator.SetBool("Dash_Flg", false);
+            m_Animator.animator.SetInteger("WalkTrigger", 2);
+        }
         //end時、アニメーションのフラグカウントを0にする
         if (PE_Control.getAnim() == "jabend")
         {
@@ -207,6 +261,12 @@ public class naginata : NetworkBehaviour
         if (PE_Control.getAnim() == "tilt2end")
         {
             m_Animator.animator.SetInteger("Tilt2_Seq", 0);
+        }
+        //end時、アニメーションのフラグカウントを0にする
+        if (PE_Control.getAnim() == "jumpout")
+        {
+            m_Animator.animator.SetInteger("Jump_Seq", 0);
+            m_Animator.animator.SetInteger("WalkTrigger", 2);
         }
         //end時、アニメーションのフラグカウントを0にする
         if (PE_Control.getAnim() == "damage2-3end")
@@ -221,6 +281,23 @@ public class naginata : NetworkBehaviour
         }
     }
     
+    //1か-1に変換したGetAxisの成分を取得
+    int changeGetAxis( float h_or_v ){
+        int changed_h_or_v;
+        if (h_or_v > 0)
+        {
+            changed_h_or_v = 1;
+        }
+        else if (h_or_v < 0)
+        {
+            changed_h_or_v = -1;
+        }
+        else {
+            changed_h_or_v = 0;
+        }
+        return changed_h_or_v;
+    }
+
     //着地判定
     bool checkIsGround(Vector3 position, float distance)
     {
@@ -296,9 +373,12 @@ public class naginata : NetworkBehaviour
     void KeyCheck()
     {
         //【 〇　弱攻撃 】
-        if (Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.Z) ) 
+        if (Input.GetKeyDown("joystick button 1")
+            && (PE_Control.getAnim() == "jab1" || PE_Control.getAnim() == "jab2" || PE_Control.getAnim() == "jab1wait" || PE_Control.getAnim() == "jab2wait" 
+            || PE_Control.getAnim() == "walk" || PE_Control.getAnim() == "stay")) 
         {
             if (m_Animator.animator.GetInteger("Jab_Seq") == 0) {
+                rb.velocity = Vector3.zero;
                 m_Animator.animator.SetInteger("Jab_Seq", 1);
             }
             else if ((m_Animator.animator.GetInteger("Jab_Seq") == 1) && (PE_Control.getAnim() == "jabwait1") || (PE_Control.getAnim() == "jab1"))
@@ -315,52 +395,55 @@ public class naginata : NetworkBehaviour
         }
 
         //【 △　強攻撃１ 】
-        if (Input.GetKeyDown("joystick button 0"))
+        if (Input.GetKeyDown("joystick button 0") && (PE_Control.getAnim() == "walk" || PE_Control.getAnim() == "stay"))
         {
+            rb.velocity = Vector3.zero;
             m_Animator.animator.SetBool("Tilt1_Flg", true);
         }
 
         //【 □　強攻撃２ 】
-        if (Input.GetKeyDown("joystick button 3") || Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKeyDown("joystick button 3") && (PE_Control.getAnim() == "walk" || PE_Control.getAnim() == "stay"))
         {
+            rb.velocity = Vector3.zero;
             if (m_Animator.animator.GetInteger("Tilt2_Seq") == 0){
                 m_Animator.animator.SetInteger("Tilt2_Seq", 1);
             }
         }
 
         //【 ×　ジャンプ 】
-        // スペースキーでジャンプ
-        if ((Input.GetKeyDown(KeyCode.Space)) || (Input.GetKeyDown("joystick button 2")))
+        // walkかstayならスペースキーでジャンプ
+        if (((Input.GetKeyDown(KeyCode.Space)) || (Input.GetKeyDown("joystick button 2"))) && ((PE_Control.getAnim() == "stay") || (PE_Control.getAnim() == "walk")) )
         {
             // 接地しているならジャンプ
             if( (checkIsGround(rb.position, 0.3f) == true) && (m_Animator.animator.GetInteger("Jump_Seq") == 0 ) )
             {
                 m_Animator.animator.SetInteger("Jump_Seq", 1);
-                capsuleCollider.material = nonslip;
+                capsuleCollider.material = slip;
                 rb.AddForce(new Vector3(0.0f, jump, 0.0f), ForceMode.Impulse);
             }
         }
 
         //【 L2+R2　必殺技 】
-        if (Input.GetKeyDown("joystick button 4") && Input.GetKeyDown("joystick button 5") || Input.GetKeyDown(KeyCode.X))
+        if (Input.GetKeyDown("joystick button 4") && Input.GetKeyDown("joystick button 5") && (PE_Control.getAnim() == "walk" || PE_Control.getAnim() == "stay"))
         {
+            rb.velocity = Vector3.zero;
             lrcheck2 = 2;
             Debug.Log("必殺技");
         }
         //【 R2　ダッシュ 】
-        else if (Input.GetKeyDown("joystick button 5"))
+        else if (Input.GetKeyDown("joystick button 5") && (PE_Control.getAnim() == "walk" || PE_Control.getAnim() == "stay"))
         {
-            doubletapflg = true;
-            Debug.Log("ダッシュ");
+            m_Animator.animator.SetBool("Dash_Flg", true);
         }
         //【 L2　ガード 下げ】
-        else if (Input.GetKeyDown("joystick button 4") || Input.GetKeyDown(KeyCode.V))
+        else if (Input.GetKeyDown("joystick button 4") && (PE_Control.getAnim() == "walk" || PE_Control.getAnim() == "stay"))
         {
+            rb.velocity = Vector3.zero;
             lrcheck2 = 1;
             Debug.Log("ガード");
         }
         //【 L2　ガード 上げ】
-        else if (Input.GetKeyUp("joystick button 4") || Input.GetKeyUp(KeyCode.V))
+        else if (Input.GetKeyUp("joystick button 4"))
         {
             lrcheck2 = 0;
         }
@@ -379,16 +462,5 @@ public class naginata : NetworkBehaviour
             Debug.Log("ターゲット切り替え右");
         }
     }
-
-    /* ------------------------------------------------ */
-    // Winアニメーション      
-    //m_Animator.animator.SetBool("Win", false);
-    //m_Animator.animator.SetBool("Win", true);
-    // ダメージアニメーション      
-    //m_Animator.SetTrigger("Damage1");
-    //m_Animator.SetTrigger("Damage2");
-    //m_Animator.SetTrigger("Damage3");
-    //m_Animator.SetTrigger("Damage4");
-    /* ------------------------------------------------ */
 }
 

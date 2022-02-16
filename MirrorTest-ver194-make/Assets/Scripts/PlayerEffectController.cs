@@ -53,16 +53,22 @@ public class PlayerEffectController : NetworkBehaviour
                 case "tilt1_2":
                 case "tilt2":
                 case "tilt2_2":
-                case "ult":
                     GameObject obj = Instantiate(effectPrefab5, parentTransform);
                     obj.transform.SetParent(parentTransform);
                     obj.GetComponent<ParticleColliderController>().setPID(playerID);
                     break;
             }
 
-            if (animState == "jump")
+            if (animState == "ult") {
+                GameObject obj = Instantiate(effectPrefab7, parentTransform);
+                obj.transform.SetParent(parentTransform);
+                obj.GetComponent<ParticleColliderController>().setPID(playerID);            
+            }
+
+            if (animState == "jumpin")
             {
-                GameObject obj = Instantiate(effectPrefab1, playerTransform.position, Quaternion.identity);
+                Quaternion make_rotation = Quaternion.Euler(270.0f, 0.0f, 0.0f);
+                GameObject obj = Instantiate(effectPrefab1, playerTransform.position, make_rotation);
             }
 
             if (animState == "tilt2_1")
@@ -176,6 +182,10 @@ public class PlayerEffectController : NetworkBehaviour
         {
             nowAnim = "dash";
         }
+        if (playerAnimator.animator.GetCurrentAnimatorStateInfo(0).IsName("dashend"))
+        {
+            nowAnim = "dashend";
+        }
         if (playerAnimator.animator.GetCurrentAnimatorStateInfo(0).IsName("guard"))
         {
             nowAnim = "guard";
@@ -200,7 +210,7 @@ public class PlayerEffectController : NetworkBehaviour
         {
             nowAnim = "damage2";
         }
-        if (playerAnimator.animator.GetCurrentAnimatorStateInfo(0).IsName("damage2"))
+        if (playerAnimator.animator.GetCurrentAnimatorStateInfo(0).IsName("damageloop"))
         {
             nowAnim = "damageloop";
         }
@@ -240,11 +250,11 @@ public class PlayerEffectController : NetworkBehaviour
         {
             nowAnim = "jumpin";
         }
-        if (playerAnimator.animator.GetCurrentAnimatorStateInfo(0).IsName("jumploop"))
+        if (playerAnimator.animator.GetCurrentAnimatorStateInfo(0).IsName("jumploop_up"))
         {
             nowAnim = "jumploop_up";
         }
-        if (playerAnimator.animator.GetCurrentAnimatorStateInfo(0).IsName("jumploop"))
+        if (playerAnimator.animator.GetCurrentAnimatorStateInfo(0).IsName("jumploop_down"))
         {
             nowAnim = "jumploop_down";
         }
