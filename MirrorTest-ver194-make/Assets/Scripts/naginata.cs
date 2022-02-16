@@ -23,7 +23,7 @@ public class naginata : NetworkBehaviour
     private Rigidbody rb;
     private Collider capsuleCollider;
 
-    private float dtap_NowTime = 0f;                //　最初に移動ボタンが押されてからの経過時間
+    private float dtap_NowTime = 0.0f;                //　最初に移動ボタンが押されてからの経過時間
     private Vector2 dtap_Direction = Vector2.zero;  //　移動キーの押した方向
     private int tapCount = 0;
     private bool doubletapflg = false;              // ダブルタップのフラグ   false->なし   true->あり
