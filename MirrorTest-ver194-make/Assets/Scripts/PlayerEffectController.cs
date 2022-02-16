@@ -5,23 +5,24 @@ using Mirror;
 
 public class PlayerEffectController : NetworkBehaviour
 {
+    public string playerType;
     public Transform parentTransform;
+    public GameObject jumpPrefab;
+    public GameObject guardPrefab;
+    public GameObject damagePrefab1;
+    public GameObject damagePrefab2;
     public GameObject effectPrefab1;
     public GameObject effectPrefab2;
     public GameObject effectPrefab3;
     public GameObject effectPrefab4;
     public GameObject effectPrefab5;
-    public GameObject effectPrefab6;
-    public GameObject effectPrefab7;
-    public GameObject effectPrefab8;
-    public GameObject effectPrefab9;
-    public GameObject effectPrefab10;
 
     private Transform playerTransform;
     private NetworkAnimator playerAnimator;
     private PlayerTargetController playerTarget;
     private Rigidbody rb;
     private string animState;
+    private string animTag;
     private uint playerID;  
 
     // Start is called before the first frame update
@@ -33,6 +34,7 @@ public class PlayerEffectController : NetworkBehaviour
         rb = GetComponent<Rigidbody>();
         playerID = playerTarget.getPId();
         animState = "";
+        animTag = "";
     }
 
     // Update is called once per frame
@@ -43,52 +45,41 @@ public class PlayerEffectController : NetworkBehaviour
         {
             //アニメーション状態を保存
             animState = getAnimState();
-
-            switch (animState) {
-                case "jab1":
-                case "jab2":
-                case "jab3":
-                case "tilt2":
-                case "tilt2_2":
-                    GameObject obj = Instantiate(effectPrefab5, parentTransform);
-                    obj.transform.SetParent(parentTransform);
-                    obj.GetComponent<ParticleColliderController1>().setPID(playerID);
-                    break;
-            }
-                           
-            if (animState == "tilt1") {
-                GameObject obj = Instantiate(effectPrefab7, parentTransform);
-                obj.transform.SetParent(parentTransform);
-                obj.GetComponent<ParticleColliderController2>().setPID(playerID);
-                obj.GetComponent<ParticleColliderController2>().setForwardVelocity(new Vector3(playerTransform.forward.x, 5.0f, playerTransform.forward.z));
-            }
-
-            if (animState == "ult") {
-                GameObject obj = Instantiate(effectPrefab7, parentTransform);
-                obj.transform.SetParent(parentTransform);
-                obj.GetComponent<ParticleColliderController2>().setPID(playerID);
-                obj.GetComponent<ParticleColliderController2>().setForwardVelocity(new Vector3(playerTransform.forward.x, 5.0f, playerTransform.forward.z));
-            }
+            //アニメーションのタグを保存
+            animTag = getAnimTag();
 
             if (animState == "jumpin")
             {
                 Quaternion make_rotation = Quaternion.Euler(270.0f, 0.0f, 0.0f);
-                GameObject obj = Instantiate(effectPrefab1, playerTransform.position, make_rotation);
+                GameObject obj = Instantiate(jumpPrefab, playerTransform.position, make_rotation);
             }
-
-            if (animState == "tilt2_1")
-            {
-                Vector3 make_position = new Vector3(playerTransform.position.x + (playerTransform.forward.x * 2), playerTransform.position.y + 2.0f, playerTransform.position.z + (playerTransform.forward.z * 2));
-                GameObject obj = Instantiate(effectPrefab6, make_position, playerTransform.rotation );
-                obj.GetComponent<CounterController>().setPlayerName(gameObject.name);
-            }
-
             if (animState == "guard")
             {
                 Vector3 make_position = new Vector3(playerTransform.position.x, playerTransform.position.y + 2.5f, playerTransform.position.z);
-                GameObject obj = Instantiate(effectPrefab2, make_position, Quaternion.identity);
+                GameObject obj = Instantiate(guardPrefab, make_position, Quaternion.identity);
                 obj.GetComponent<GuardBallController>().setPlayerName(gameObject.name);
             }
+
+            switch(playerType){
+                case "ガンマン":
+                    break;
+                case "サモナー":
+                    break;
+                case "忍者":
+                    break;
+                case "格闘家":
+                    break;
+                case "海賊":
+                    break;
+                case "薙刀":
+                    naginataEffectPattern();
+                    break;
+                case "騎士":
+                    break;
+                case "魔法使い":
+                    break;
+            }
+
         }
     }
 
@@ -101,17 +92,16 @@ public class PlayerEffectController : NetworkBehaviour
 
         }
         //カウンター状態時
-        else if (animState == "tilt2_1")
+        else if (animState == "tilt2_1" && animTag == "counter")
         {
-            playerAnimator.animator.SetBool("Tlit2_Counter_Flg", true);
+            playerAnimator.animator.SetBool("Tilt2_Counter_Flg", true);
         }
         //ダメージ受けた時
         else 
         {
             playerAnimator.animator.SetBool("Damage1_Flg", true);
-            Instantiate(effectPrefab3, playerTransform);
+            Instantiate(damagePrefab1, playerTransform);
         }
-
     }
 
     //ダメージ発生関数２
@@ -123,16 +113,16 @@ public class PlayerEffectController : NetworkBehaviour
 
         }
         //カウンター状態時
-        else if (animState == "tilt2_1")
+        else if (animState == "tilt2_1" && animTag == "counter")
         {
-            playerAnimator.animator.SetBool("Tlit2_Counter_Flg", true);
+            playerAnimator.animator.SetBool("Tilt2_Counter_Flg", true);
         }
         //ダメージ受けた時
         else
         {
             rb.AddForce(forwardVelocity, ForceMode.Impulse);
             playerAnimator.animator.SetInteger("Damage2-3_Seq", 1);
-            Instantiate(effectPrefab4, playerTransform);
+            Instantiate(damagePrefab2, playerTransform);
         }
     }
 
@@ -145,6 +135,19 @@ public class PlayerEffectController : NetworkBehaviour
     //publicアニメーション取得
     public string getAnim(){
         return animState ;
+    }
+    
+    //アニメーションタグ取得
+    private string getAnimTag()
+    {
+        string nowTag = "";
+
+        if (playerAnimator.animator.GetCurrentAnimatorStateInfo(0).IsTag("counter"))
+        {
+            nowTag = "counter";
+        }   
+
+        return nowTag;
     }
 
     //アニメーション状態取得
@@ -271,4 +274,42 @@ public class PlayerEffectController : NetworkBehaviour
         return nowAnim;
     }
 
+    void naginataEffectPattern()
+    {
+        switch (animState) {
+            case "jab1":
+            case "jab2":
+            case "jab3":
+            case "tilt2":
+            case "tilt2_2":
+                GameObject obj = Instantiate(effectPrefab1, parentTransform);
+                obj.transform.SetParent(parentTransform);
+                obj.GetComponent<ParticleColliderController1>().setPID(playerID);
+                obj.GetComponent<ParticleColliderController1>().setDamage(5.0f);
+                break;
+        }
+                           
+        if (animState == "tilt1") {
+            GameObject obj = Instantiate(effectPrefab2, parentTransform);
+            obj.transform.SetParent(parentTransform);
+            obj.GetComponent<ParticleColliderController2>().setPID(playerID);
+            obj.GetComponent<ParticleColliderController2>().setForwardVelocity(new Vector3(playerTransform.forward.x * 3.0f, 3.0f, playerTransform.forward.z * 3.0f));
+            obj.GetComponent<ParticleColliderController2>().setDamage(10.0f);
+        }
+
+        if (animState == "ult") {
+            GameObject obj = Instantiate(effectPrefab2, parentTransform);
+            obj.transform.SetParent(parentTransform);
+            obj.GetComponent<ParticleColliderController2>().setPID(playerID);
+            obj.GetComponent<ParticleColliderController2>().setForwardVelocity(new Vector3(playerTransform.forward.x * 10.0f, 10.0f, playerTransform.forward.z * 10.0f));
+            obj.GetComponent<ParticleColliderController2>().setDamage(50.0f);
+        }
+
+        if (animState == "tilt2_1")
+        {
+            Vector3 make_position = new Vector3(playerTransform.position.x + (playerTransform.forward.x * 2), playerTransform.position.y + 2.0f, playerTransform.position.z + (playerTransform.forward.z * 2));
+            GameObject obj = Instantiate(effectPrefab3, make_position, playerTransform.rotation );
+            obj.GetComponent<CounterController>().setPlayerName(gameObject.name);
+        }
+    }
 }

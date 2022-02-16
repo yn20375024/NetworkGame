@@ -8,6 +8,7 @@ ScriptsOnlyBuild:
     - ParticleColliderController1
     - ParticleColliderController2
     - PlayerEffectController
+    - PlayerParameterController
     - PlayerTargetController
     - naginata
     Mirror.Components.dll:
@@ -25,7 +26,6 @@ ScriptsOnlyBuild:
     UnityEditor.Graphs.dll:
     - UnityEditor.Graphs.AnimationBlendTree.Graph
     - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
-    - UnityEditor.Graphs.AnimationStateMachine.AnimatorStateTransitionInspector
     - UnityEditor.Graphs.AnimationStateMachine.AnyStateNode
     - UnityEditor.Graphs.AnimationStateMachine.Graph
     - UnityEditor.Graphs.AnimationStateMachine.GraphGUI
@@ -102,11 +102,13 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 13036}
     - Class: 114
-      Script: {instanceID: 13812}
+      Script: {instanceID: 13074}
     - Class: 114
-      Script: {instanceID: 14030}
+      Script: {instanceID: 13450}
     - Class: 114
-      Script: {instanceID: 19602}
+      Script: {instanceID: 13816}
+    - Class: 114
+      Script: {instanceID: 14034}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 134
@@ -176,7 +178,7 @@ ScriptsOnlyBuild:
     className: SpatialHashingInterestManagement
   - hash:
       serializedVersion: 2
-      Hash: 08cb60a260e8a18f01f4c1d0b27e0544
+      Hash: 8d3a6b603c7de93fc55cb98f02746c9e
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: naginata
@@ -542,6 +544,12 @@ ScriptsOnlyBuild:
     className: NetworkAnimator
   - hash:
       serializedVersion: 2
+      Hash: bd7095291acebe68a7f204c631d64836
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: PlayerParameterController
+  - hash:
+      serializedVersion: 2
       Hash: b26c6f4c6312e2952bbe7d0df1ea026e
     assemblyName: Mirror.Components.dll
     namespaceName: Mirror
@@ -636,6 +644,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: TimelineAsset
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: ParticleColliderController2
   - hash:
       serializedVersion: 2
       Hash: b5f0f83dc4121ae016c48bb1145064b3
@@ -858,13 +872,7 @@ ScriptsOnlyBuild:
     assemblyName: Mirror.dll
     namespaceName: kcp2k
     className: KcpTransport
-  - hash:
-      serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: ParticleColliderController2
   platform: 19
   scenePathNames:
   - Assets/Scenes/GameScene.unity
-  playerPath: C:/Users/Fujitsu/Desktop/MirrorTest-ver194-make/exe/MirrorTest3.exe
+  playerPath: "C:/Users/DELL/Desktop/\u5B66\u6821/Unity\u5236\u4F5C/\u5352\u696D\u5236\u4F5C/2/MirrorTest-ver194-make/exe/MirrorTest3.exe"

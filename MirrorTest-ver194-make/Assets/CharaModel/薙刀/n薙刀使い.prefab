@@ -480,6 +480,7 @@ GameObject:
   - component: {fileID: -4503903077155915675}
   - component: {fileID: -684859291267543395}
   - component: {fileID: -3608348846447861188}
+  - component: {fileID: -1389201385308765596}
   - component: {fileID: -1309298062352673681}
   - component: {fileID: -8168159356766932527}
   m_Layer: 0
@@ -660,8 +661,22 @@ MonoBehaviour:
   lrcheck2: 0
   slip: {fileID: 13400000, guid: 108e8599ce0151e42a37cd367890d8e3, type: 2}
   nonslip: {fileID: 13400000, guid: aec3d17f8d4beaa49a50eaeba915fd32, type: 2}
+--- !u!114 &-1389201385308765596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1174092121836896136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23555429f90eb964b9a2fe8bf4d9ec87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerDeadFlg: 0
+  hp: 1000
   speed: 10
-  jump: 10
+  jump: 15
 --- !u!114 &-1309298062352673681
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -694,24 +709,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  playerType: "\u8599\u5200"
   parentTransform: {fileID: 3440490792040671116}
-  effectPrefab1: {fileID: 5273645971538078375, guid: 8807f735bd6ae46429fe9c5c9ea753bb,
+  jumpPrefab: {fileID: 5273645971538078375, guid: 8807f735bd6ae46429fe9c5c9ea753bb,
     type: 3}
-  effectPrefab2: {fileID: 7455034553951734725, guid: 78d481eacff53af49b5858a3edfa3064,
+  guardPrefab: {fileID: 7455034553951734725, guid: 78d481eacff53af49b5858a3edfa3064,
     type: 3}
-  effectPrefab3: {fileID: 248436918513249981, guid: cb70b332efc9e81498825e3ab9ead4b6,
+  damagePrefab1: {fileID: 248436918513249981, guid: cb70b332efc9e81498825e3ab9ead4b6,
     type: 3}
-  effectPrefab4: {fileID: 3581913416877342026, guid: bf383e9ea5ca3a54c9af100ced8fed78,
+  damagePrefab2: {fileID: 3581913416877342026, guid: bf383e9ea5ca3a54c9af100ced8fed78,
     type: 3}
-  effectPrefab5: {fileID: 6758744867127678711, guid: be37f70e0bc6d57419de3ff3bc4179b9,
+  effectPrefab1: {fileID: 6758744867127678711, guid: be37f70e0bc6d57419de3ff3bc4179b9,
     type: 3}
-  effectPrefab6: {fileID: 6829751723222981306, guid: 1d4d415993a984c4992b13efc0607d5f,
+  effectPrefab2: {fileID: 6758744867127678711, guid: aec4f1bb84837f84ca9cbecbcb844bc1,
     type: 3}
-  effectPrefab7: {fileID: 6758744867127678711, guid: aec4f1bb84837f84ca9cbecbcb844bc1,
+  effectPrefab3: {fileID: 6829751723222981306, guid: 1d4d415993a984c4992b13efc0607d5f,
     type: 3}
-  effectPrefab8: {fileID: 0}
-  effectPrefab9: {fileID: 0}
-  effectPrefab10: {fileID: 0}
+  effectPrefab4: {fileID: 0}
+  effectPrefab5: {fileID: 0}
 --- !u!1 &1241455575617471806
 GameObject:
   m_ObjectHideFlags: 0
