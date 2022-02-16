@@ -48,21 +48,26 @@ public class PlayerEffectController : NetworkBehaviour
                 case "jab1":
                 case "jab2":
                 case "jab3":
-                case "tilt1":
-                case "tilt1_1":
-                case "tilt1_2":
                 case "tilt2":
                 case "tilt2_2":
                     GameObject obj = Instantiate(effectPrefab5, parentTransform);
                     obj.transform.SetParent(parentTransform);
-                    obj.GetComponent<ParticleColliderController>().setPID(playerID);
+                    obj.GetComponent<ParticleColliderController1>().setPID(playerID);
                     break;
+            }
+                           
+            if (animState == "tilt1") {
+                GameObject obj = Instantiate(effectPrefab7, parentTransform);
+                obj.transform.SetParent(parentTransform);
+                obj.GetComponent<ParticleColliderController2>().setPID(playerID);
+                obj.GetComponent<ParticleColliderController2>().setForwardVelocity(new Vector3(playerTransform.forward.x, 5.0f, playerTransform.forward.z));
             }
 
             if (animState == "ult") {
                 GameObject obj = Instantiate(effectPrefab7, parentTransform);
                 obj.transform.SetParent(parentTransform);
-                obj.GetComponent<ParticleColliderController>().setPID(playerID);            
+                obj.GetComponent<ParticleColliderController2>().setPID(playerID);
+                obj.GetComponent<ParticleColliderController2>().setForwardVelocity(new Vector3(playerTransform.forward.x, 5.0f, playerTransform.forward.z));
             }
 
             if (animState == "jumpin")
@@ -125,7 +130,7 @@ public class PlayerEffectController : NetworkBehaviour
         //ダメージ受けた時
         else
         {
-            rb.AddForce(forwardVelocity);
+            rb.AddForce(forwardVelocity, ForceMode.Impulse);
             playerAnimator.animator.SetInteger("Damage2-3_Seq", 1);
             Instantiate(effectPrefab4, playerTransform);
         }

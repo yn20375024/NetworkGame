@@ -60,7 +60,8 @@
      <Compile Include="Assets\Scripts\FollowAndLookAtTarget.cs" />
      <Compile Include="Assets\Scripts\GuardBallController.cs" />
      <Compile Include="Assets\Scripts\JumpEffeController.cs" />
-     <Compile Include="Assets\Scripts\ParticleColliderController.cs" />
+     <Compile Include="Assets\Scripts\ParticleColliderController1.cs" />
+     <Compile Include="Assets\Scripts\ParticleColliderController2.cs" />
      <Compile Include="Assets\Scripts\PlayerEffectController.cs" />
      <Compile Include="Assets\Scripts\PlayerTargetController.cs" />
      <Compile Include="Assets\Scripts\ReadOnly\ReadOnlyAttribute.cs" />

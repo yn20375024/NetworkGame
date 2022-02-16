@@ -192,27 +192,14 @@ public class naginata : NetworkBehaviour
         DoubleTap();        //ダブルタップ
         KeyCheck();         //キーチェック
 
-        // 吹き飛び着地処理
+        // 吹き飛び常時処理
         if (m_Animator.animator.GetInteger("Damage2-3_Seq") == 1)
         {
-            //飛び上がり
-            if (rb.velocity.y <= 0)
+            //着地
+            if ((rb.velocity.y == 0) || (checkIsGround(rb.position, 0.3f) == true))
             {
                 m_Animator.animator.SetInteger("Damage2-3_Seq", 2);
             }
-        }
-        else if (m_Animator.animator.GetInteger("Damage2-3_Seq") == 2)
-        {
-            //着地
-            if (rb.velocity.y == 0)
-            {
-                m_Animator.animator.SetInteger("Damage2-3_Seq", 3);
-            }
-        }
-        else
-        {
-            //stayに戻る
-            m_Animator.animator.SetInteger("Damage2-3_Seq", 0);
         }
 
         // L2R2アニメーション（長押し用）

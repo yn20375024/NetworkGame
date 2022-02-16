@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2612490742998556015}
   - component: {fileID: 3277918622962054286}
   - component: {fileID: 8041903980068544528}
-  - component: {fileID: 1562313683444295116}
+  - component: {fileID: -6588426069235960744}
   m_Layer: 0
   m_Name: SlashParticle2
   m_TagString: Untagged
@@ -4813,7 +4813,7 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
---- !u!114 &1562313683444295116
+--- !u!114 &-6588426069235960744
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4822,6 +4822,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 6758744867127678711}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4b62601c7beb0f4da9a5c822c1d8cec, type: 3}
+  m_Script: {fileID: 11500000, guid: 90d8daeaa9edd6845a6d573c4b9acf86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
