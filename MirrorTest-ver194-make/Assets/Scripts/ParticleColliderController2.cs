@@ -16,11 +16,9 @@ public class ParticleColliderController2 : MonoBehaviour
 	private void OnParticleCollision(GameObject other)
 	{
         if(other.gameObject.tag == "Player"){
-		    uint otherID = other.gameObject.GetComponent<PlayerEffectController>().getPId() ;   
-            float playerHp = other.gameObject.GetComponent<PlayerParameterController>().hp ;   
+		    uint otherID = other.gameObject.GetComponent<PlayerEffectController>().getPID() ;    
             if(otherID != myPID){
-                Debug.Log(damage);
-                playerHp -= damage;
+                other.gameObject.GetComponent<PlayerParameterController>().decreaseHp(damage);
                 other.gameObject.GetComponent<PlayerEffectController>().damage2(forwardVelocity);
             }
         }

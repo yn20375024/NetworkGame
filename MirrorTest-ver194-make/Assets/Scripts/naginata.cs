@@ -173,53 +173,38 @@ public class naginata : NetworkBehaviour
     //アニメーションフラグのリセット
     void EndFlgReset()
     {
-       //end時、アニメーションのフラグをfalseにする
-        if (PE_Control.getAnim() == "tilt1end")
+        if (PE_Control.getAnim() == "start") 
         {
+            m_Animator.animator.SetBool("Damage1_Flg", false); 
+            m_Animator.animator.SetInteger("Damage2-3_Seq", 0);
             m_Animator.animator.SetBool("Tilt1_Flg", false);
+            m_Animator.animator.SetInteger("Tilt2_Seq", 0);
+            m_Animator.animator.SetInteger("WalkTrigger", 2);
+            m_Animator.animator.SetBool("Tilt2_Counter_Flg", false);
+            m_Animator.animator.SetBool("Dash_Flg", false);
+            m_Animator.animator.SetInteger("Jab_Seq", 0);
+            m_Animator.animator.SetInteger("Jump_Seq", 0);
+            m_Animator.animator.SetInteger("Ult", 0);
+            lrcheck2 = 0;
+            m_Animator.animator.SetBool("End_Flg", false); 
+            m_Animator.animator.SetBool("Start_Flg", true);
         }
-        //end時、アニメーションのフラグをfalseにする
-        if (PE_Control.getAnim() == "damage1end")
+        else if (PE_Control.getAnim() == "end")
         {
+            m_Animator.animator.SetBool("Start_Flg", false);
+            m_Animator.animator.SetBool("End_Flg", true);
+        }
+
+        if (PE_Control.getAnim() == "damage1")
+        {
+            Debug.Log("d1-in");
             m_Animator.animator.SetBool("Damage1_Flg", false);
         }
-        //end時、アニメーションのフラグをfalseにする
-        if (PE_Control.getAnim() == "tilt2end")
+        
+        if (PE_Control.getAnim() == "damage2")
         {
-            m_Animator.animator.SetBool("Tlit2_Counter_Flg", false);
-        }
-        //end時、アニメーションのフラグをfalseにする
-        if (PE_Control.getAnim() == "dashend")
-        {
-            m_Animator.animator.SetBool("Dash_Flg", false);
-            m_Animator.animator.SetInteger("WalkTrigger", 2);
-        }
-        //end時、アニメーションのフラグカウントを0にする
-        if (PE_Control.getAnim() == "jabend")
-        {
-            m_Animator.animator.SetInteger("Jab_Seq", 0);
-        }
-        //end時、アニメーションのフラグカウントを0にする
-        if (PE_Control.getAnim() == "tilt2end")
-        {
-            m_Animator.animator.SetInteger("Tilt2_Seq", 0);
-        }
-        //end時、アニメーションのフラグカウントを0にする
-        if (PE_Control.getAnim() == "jumpout")
-        {
-            m_Animator.animator.SetInteger("Jump_Seq", 0);
-            m_Animator.animator.SetInteger("WalkTrigger", 2);
-        }
-        //end時、アニメーションのフラグカウントを0にする
-        if (PE_Control.getAnim() == "damage2-3end")
-        {
-            m_Animator.animator.SetInteger("Damage2-3_Seq", 0);
-        }
-        //end時、アニメーションのフラグカウントを0にする
-        if (PE_Control.getAnim() == "ultend")
-        {
-            m_Animator.animator.SetInteger("Ult", 0);
-            lrcheck2 = 0 ;
+            Debug.Log("d2-in"); 
+            m_Animator.animator.SetInteger("Damage2-3_Seq", 2);
         }
     }
 
@@ -351,15 +336,19 @@ public class naginata : NetworkBehaviour
                 m_Animator.animator.SetInteger("Jump_Seq", 3);
             }
         }
+
+
         // 吹き飛び常時処理
-        if (m_Animator.animator.GetInteger("Damage2-3_Seq") == 1)
+        if (m_Animator.animator.GetInteger("Damage2-3_Seq") == 2)
         {
             //着地
-            if ((rb.velocity.y == 0) || (checkIsGround(rb.position, 0.3f) == true))
+            if ((rb.velocity.y == 0) || (checkIsGround(rb.position, 1.0f) == true))
             {
-                m_Animator.animator.SetInteger("Damage2-3_Seq", 2);
+                m_Animator.animator.SetInteger("Damage2-3_Seq", 3);
             }
         }
+
+
         // L2R2アニメーション（長押し用）
         if (lrcheck2 == 1)
         {

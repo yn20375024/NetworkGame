@@ -61,7 +61,7 @@ public class PlayerTargetController : NetworkBehaviour
         Debug.Log("Connected Player" + NumberOfPlayers);
     }
 
-    public uint getPId() {
+    public uint getPID() {
         return PlayerID;
     }
 

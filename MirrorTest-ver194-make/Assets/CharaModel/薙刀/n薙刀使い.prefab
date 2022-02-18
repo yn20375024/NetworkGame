@@ -546,7 +546,7 @@ Animator:
   m_GameObject: {fileID: 1174092121836896136}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 96ffbaeefbb89ec4caeb0973562f398b, type: 2}
+  m_Controller: {fileID: 9100000, guid: 05263455e67fb00469cacfe921ac1840, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -585,7 +585,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   syncMode: 0
-  syncInterval: 0.1
+  syncInterval: 0.05
   clientAuthority: 1
   animator: {fileID: -8319525312352952789}
 --- !u!114 &-4503903077155915675
@@ -613,8 +613,8 @@ MonoBehaviour:
   bufferTimeMultiplier: 1
   bufferSizeLimit: 64
   catchupThreshold: 4
-  catchupMultiplier: 0.1
-  onlySyncOnChange: 1
+  catchupMultiplier: 0.05
+  onlySyncOnChange: 0
   bufferResetMultiplier: 5
   positionSensitivity: 0.01
   rotationSensitivity: 0.01
@@ -635,7 +635,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   syncMode: 0
-  syncInterval: 0.1
+  syncInterval: 0.05
   target: {fileID: 8967720906259977035}
   clientAuthority: 1
   syncVelocity: 1

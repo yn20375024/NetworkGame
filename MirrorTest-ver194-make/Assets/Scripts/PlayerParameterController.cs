@@ -26,4 +26,9 @@ public class PlayerParameterController : MonoBehaviour
             playerDeadFlg = true;
         }
     }
+
+    public void decreaseHp(float decreasehp) 
+    {
+        hp -= decreasehp;
+    }
 }
