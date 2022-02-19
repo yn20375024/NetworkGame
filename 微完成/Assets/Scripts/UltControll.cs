@@ -41,7 +41,7 @@ public class UltControll : MonoBehaviour
     {
         if (collider.gameObject.tag == "Player")
         {
-            uint otherID = collider.gameObject.GetComponent<PlayerEffectController>().getPId();
+            uint otherID = collider.gameObject.GetComponent<PlayerEffectController>().getPID();
             Debug.Log(otherID);
             Debug.Log(myPID);
             if (otherID != myPID)

@@ -479,10 +479,10 @@ GameObject:
   - component: {fileID: 2918237577926995584}
   - component: {fileID: -4503903077155915675}
   - component: {fileID: -684859291267543395}
-  - component: {fileID: -3608348846447861188}
   - component: {fileID: -1389201385308765596}
   - component: {fileID: -1309298062352673681}
   - component: {fileID: -8168159356766932527}
+  - component: {fileID: -2145744864220210173}
   m_Layer: 0
   m_Name: "n\u8599\u5200\u4F7F\u3044"
   m_TagString: Player
@@ -546,7 +546,7 @@ Animator:
   m_GameObject: {fileID: 1174092121836896136}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 96ffbaeefbb89ec4caeb0973562f398b, type: 2}
+  m_Controller: {fileID: 9100000, guid: e0b6aeae0d9b32a4188a41e46824f48a, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -644,23 +644,6 @@ MonoBehaviour:
   syncAngularVelocity: 1
   clearAngularVelocity: 0
   angularVelocitySensitivity: 0.1
---- !u!114 &-3608348846447861188
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1174092121836896136}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06075af042dae0c4190ac9d30017921e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  lrcheck2: 0
-  slip: {fileID: 13400000, guid: 108e8599ce0151e42a37cd367890d8e3, type: 2}
-  nonslip: {fileID: 13400000, guid: aec3d17f8d4beaa49a50eaeba915fd32, type: 2}
 --- !u!114 &-1389201385308765596
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -727,6 +710,23 @@ MonoBehaviour:
     type: 3}
   effectPrefab4: {fileID: 0}
   effectPrefab5: {fileID: 0}
+--- !u!114 &-2145744864220210173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1174092121836896136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06075af042dae0c4190ac9d30017921e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  lrcheck2: 0
+  slip: {fileID: 13400000, guid: 108e8599ce0151e42a37cd367890d8e3, type: 2}
+  nonslip: {fileID: 13400000, guid: aec3d17f8d4beaa49a50eaeba915fd32, type: 2}
 --- !u!1 &1241455575617471806
 GameObject:
   m_ObjectHideFlags: 0

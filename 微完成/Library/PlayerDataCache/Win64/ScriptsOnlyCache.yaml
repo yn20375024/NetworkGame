@@ -10,6 +10,7 @@ ScriptsOnlyBuild:
     - PlayerEffectController
     - PlayerParameterController
     - PlayerTargetController
+    - ganman
     - naginata
     Mirror.Components.dll:
     - Mirror.Experimental.NetworkRigidbody
@@ -26,8 +27,11 @@ ScriptsOnlyBuild:
     UnityEditor.Graphs.dll:
     - UnityEditor.Graphs.AnimationBlendTree.Graph
     - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.AnimatorStateTransitionInspector
+    - UnityEditor.Graphs.AnimationStateMachine.AnyStateNode
     - UnityEditor.Graphs.AnimationStateMachine.Graph
     - UnityEditor.Graphs.AnimationStateMachine.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.StateNode
     - UnityEditor.Graphs.AnimatorControllerTool
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
@@ -104,9 +108,9 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 13454}
     - Class: 114
-      Script: {instanceID: 13820}
+      Script: {instanceID: 13822}
     - Class: 114
-      Script: {instanceID: 14038}
+      Script: {instanceID: 14040}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 134
@@ -326,7 +330,7 @@ ScriptsOnlyBuild:
     className: AspectRatioFitter
   - hash:
       serializedVersion: 2
-      Hash: b5f0f83dc4121ae016c48bb1145064b3
+      Hash: 8d3a6b603c7de93fc55cb98f02746c9e
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: kakutouka
@@ -572,7 +576,7 @@ ScriptsOnlyBuild:
     className: VerticalLayoutGroup
   - hash:
       serializedVersion: 2
-      Hash: b5f0f83dc4121ae016c48bb1145064b3
+      Hash: 8d3a6b603c7de93fc55cb98f02746c9e
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: mahoutukai
@@ -696,6 +700,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: AudioTrack
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: ImpactController
   - hash:
       serializedVersion: 2
       Hash: ae83e830e7a90c0aff918c4c2e520825
@@ -882,7 +892,19 @@ ScriptsOnlyBuild:
     assemblyName: Mirror.dll
     namespaceName: kcp2k
     className: KcpTransport
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: SelfDestroy
+  - hash:
+      serializedVersion: 2
+      Hash: 899362f0dead0cb96ad9e8362f1b2506
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: ParticleScript
   platform: 19
   scenePathNames:
   - Assets/Scenes/GameScene.unity
-  playerPath: "C:/Users/koyama/Desktop/\u7DE8\u96C6/\u30AD\u30E3\u30E9\u30A2\u30CB\u30E1\u30FC\u30B7\u30E7\u30F3/MirrorTest-ver194-make/exe/MirrorTest3.exe"
+  playerPath: "C:/Users/Fujitsu/Desktop/\u5FAE\u5B8C\u6210/exe/MirrorTest3.exe"

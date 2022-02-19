@@ -65,7 +65,7 @@ public class ImpactController : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            uint otherID = other.gameObject.GetComponent<PlayerEffectController>().getPId();
+            uint otherID = other.gameObject.GetComponent<PlayerEffectController>().getPID();
             if (otherID != myPID)
             {
                 other.gameObject.GetComponent<PlayerParameterController>().decreaseHp(damage);

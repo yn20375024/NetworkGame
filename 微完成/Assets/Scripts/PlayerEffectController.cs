@@ -23,7 +23,7 @@ public class PlayerEffectController : NetworkBehaviour
     private Rigidbody rb;
     private string animState;
     private string animTag;
-    private uint playerID;  
+    private uint playerID;
 
     // Start is called before the first frame update
     void Start()
@@ -32,7 +32,7 @@ public class PlayerEffectController : NetworkBehaviour
         playerAnimator = GetComponent<NetworkAnimator>();
         playerTarget = GetComponent<PlayerTargetController>();
         rb = GetComponent<Rigidbody>();
-        playerID = playerTarget.getPId();
+        playerID = playerTarget.getPID();
         animState = "";
         animTag = "";
     }
@@ -57,7 +57,7 @@ public class PlayerEffectController : NetworkBehaviour
             {
                 Vector3 make_position = new Vector3(playerTransform.position.x, playerTransform.position.y + 2.5f, playerTransform.position.z);
                 GameObject obj = Instantiate(guardPrefab, make_position, Quaternion.identity);
-                obj.GetComponent<GuardBallController>().setPlayerName(gameObject.name);
+                obj.GetComponent<GuardBallController>().setPID(playerID);
             }
 
             switch(playerType){
@@ -93,6 +93,28 @@ public class PlayerEffectController : NetworkBehaviour
     //ガンマンエフェクトパターン
     void gunmanEffectPattern()
     {
+        if (animState == "ult")
+        {
+            Vector3 make_position = new Vector3(playerTransform.position.x + (playerTransform.forward.x * 3), playerTransform.position.y + 3.0f, playerTransform.position.z + (playerTransform.forward.z * 3));
+            GameObject obj = Instantiate(effectPrefab2, make_position, playerTransform.rotation);
+        }
+
+        if (animState == "jab1" || animState == "jab2")
+        {
+            Vector3 make_position = new Vector3(playerTransform.position.x + (playerTransform.forward.x * 3), playerTransform.position.y + 3.0f, playerTransform.position.z + (playerTransform.forward.z * 3));
+            GameObject obj = Instantiate(effectPrefab1, make_position, playerTransform.rotation);
+            obj.GetComponent<ParticleScript>().setThrowPower(new Vector3(playerTransform.forward.x * 200.0f, 0.0f, playerTransform.forward.z * 200.0f));
+            obj.GetComponent<ParticleScript>().setPID(playerID);
+            obj.GetComponent<ParticleScript>().setDamage(5.0f);
+        }
+
+        if (animState == "tilt2end")
+        {
+            Vector3 make_position = new Vector3(playerTransform.position.x + (playerTransform.forward.x * 2), playerTransform.position.y + 5.0f, playerTransform.position.z + (playerTransform.forward.z * 2));
+            GameObject obj = Instantiate(effectPrefab3, make_position, playerTransform.rotation);
+            obj.GetComponent<ParticleScript>().setThrowPower(new Vector3(playerTransform.forward.x * 5.0f, 5.0f, playerTransform.forward.z * 5.0f));
+
+        }
     }
 
     //サモナーエフェクトパターン
@@ -255,6 +277,7 @@ public class PlayerEffectController : NetworkBehaviour
         {
             case "jab1":
             case "jab2":
+            case "jab3":
             case "tilt2":
             case "tilt2_2":
                 GameObject obj = Instantiate(effectPrefab1, parentTransform);
@@ -286,7 +309,7 @@ public class PlayerEffectController : NetworkBehaviour
         {
             Vector3 make_position = new Vector3(playerTransform.position.x + (playerTransform.forward.x * 2), playerTransform.position.y + 2.0f, playerTransform.position.z + (playerTransform.forward.z * 2));
             GameObject obj = Instantiate(effectPrefab3, make_position, playerTransform.rotation);
-            obj.GetComponent<CounterController>().setPlayerName(gameObject.name);
+            obj.GetComponent<CounterController>().setPID(playerID);
         }
     }
 
@@ -344,16 +367,17 @@ public class PlayerEffectController : NetworkBehaviour
     }
 
     //publicプレイヤーID取得
-    public uint getPId()
+    public uint getPID()
     {
         return playerID;
     }
 
     //publicアニメーション取得
-    public string getAnim(){
-        return animState ;
+    public string getAnim()
+    {
+        return animState;
     }
-    
+
     //アニメーションタグ取得
     private string getAnimTag()
     {
@@ -362,15 +386,23 @@ public class PlayerEffectController : NetworkBehaviour
         if (playerAnimator.animator.GetCurrentAnimatorStateInfo(0).IsTag("counter"))
         {
             nowTag = "counter";
-        }   
+        }
 
         return nowTag;
     }
 
     //アニメーション状態取得
-    private string getAnimState() {
+    private string getAnimState()
+    {
         string nowAnim = "";
-
+        if (playerAnimator.animator.GetCurrentAnimatorStateInfo(0).IsName("start"))
+        {
+            nowAnim = "start";
+        }
+        if (playerAnimator.animator.GetCurrentAnimatorStateInfo(0).IsName("end"))
+        {
+            nowAnim = "end";
+        }
         if (playerAnimator.animator.GetCurrentAnimatorStateInfo(0).IsName("walk"))
         {
             nowAnim = "walk";
@@ -454,6 +486,10 @@ public class PlayerEffectController : NetworkBehaviour
         if (playerAnimator.animator.GetCurrentAnimatorStateInfo(0).IsName("tilt1end"))
         {
             nowAnim = "tilt1end";
+        }
+        if (playerAnimator.animator.GetCurrentAnimatorStateInfo(0).IsName("tilt2"))
+        {
+            nowAnim = "tilt2";
         }
         if (playerAnimator.animator.GetCurrentAnimatorStateInfo(0).IsName("tilt2_1"))
         {
