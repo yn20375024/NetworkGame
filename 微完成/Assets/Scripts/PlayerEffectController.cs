@@ -86,7 +86,6 @@ public class PlayerEffectController : NetworkBehaviour
                     magicianEffectPattern();
                     break;
             }
-
         }
     }
     
@@ -130,13 +129,13 @@ public class PlayerEffectController : NetworkBehaviour
     //格闘家エフェクトパターン
     void fighterEffectPattern()
     {
+
         if ((animState == "jab1") || (animState == "jab2"))
         {
             Vector3 make_position = new Vector3(playerTransform.position.x + (playerTransform.forward.x * 2), playerTransform.position.y + 2.5f, playerTransform.position.z + (playerTransform.forward.z * 2));
             GameObject obj = Instantiate(effectPrefab1, make_position, playerTransform.rotation);
             obj.GetComponent<ImpactController>().setPID(playerID);
             obj.GetComponent<ImpactController>().setDamage(5.0f);
-            obj.GetComponent<ImpactController>().setPlayerName(gameObject.name);
             obj.GetComponent<ImpactController>().setState("jab1");
         }
 
@@ -148,7 +147,6 @@ public class PlayerEffectController : NetworkBehaviour
             obj.GetComponent<ImpactController>().OnKnockBack();
             obj.GetComponent<ImpactController>().setForwardVelocity(new Vector3(playerTransform.forward.x * 8.0f, 5.0f, playerTransform.forward.z * 8.0f));
             obj.GetComponent<ImpactController>().setDamage(5.0f);
-            obj.GetComponent<ImpactController>().setPlayerName(gameObject.name);
             obj.GetComponent<ImpactController>().setState("jab3");
         }
 
@@ -183,7 +181,6 @@ public class PlayerEffectController : NetworkBehaviour
         GameObject obj = Instantiate(effectPrefab1, make_position, playerTransform.rotation);
         obj.GetComponent<ImpactController>().setPID(playerID);
         obj.GetComponent<ImpactController>().setDamage(5.0f);
-        obj.GetComponent<ImpactController>().setPlayerName(gameObject.name);
         obj.GetComponent<ImpactController>().setState("tilt1");
     }
     // 格闘家強攻撃１アッパー
@@ -196,7 +193,6 @@ public class PlayerEffectController : NetworkBehaviour
         obj.GetComponent<ImpactController>().OnKnockBack();
         obj.GetComponent<ImpactController>().setForwardVelocity(new Vector3(playerTransform.forward.x * 7.0f, 12.0f, playerTransform.forward.z * 7.0f));
         obj.GetComponent<ImpactController>().setDamage(5.0f);
-        obj.GetComponent<ImpactController>().setPlayerName(gameObject.name);
         obj.GetComponent<ImpactController>().setState("tilt1");
     }
     // 格闘家必殺技
@@ -208,7 +204,6 @@ public class PlayerEffectController : NetworkBehaviour
         obj.GetComponent<ImpactController>().OnKnockBack();
         obj.GetComponent<ImpactController>().setForwardVelocity(new Vector3(playerTransform.forward.x * 10.0f, 10.0f, playerTransform.forward.z * 10.0f));
         obj.GetComponent<ImpactController>().setDamage(5.0f);
-        obj.GetComponent<ImpactController>().setPlayerName(gameObject.name);
         obj.GetComponent<ImpactController>().setState("ult");
 
         Vector3 make_position2 = new Vector3(playerTransform.position.x + (playerTransform.forward.x * 3), playerTransform.position.y + 2.5f, playerTransform.position.z + (playerTransform.forward.z * 3));
@@ -217,7 +212,6 @@ public class PlayerEffectController : NetworkBehaviour
         obj.GetComponent<ImpactController>().OnKnockBack();
         obj.GetComponent<ImpactController>().setForwardVelocity(new Vector3(playerTransform.forward.x * 10.0f, 10.0f, playerTransform.forward.z * 10.0f));
         obj2.GetComponent<ImpactController>().setDamage(5.0f);
-        obj2.GetComponent<ImpactController>().setPlayerName(gameObject.name);
         obj2.GetComponent<ImpactController>().setState("ult");
     }
 
@@ -321,6 +315,64 @@ public class PlayerEffectController : NetworkBehaviour
     //魔法使いエフェクトパターン
     void magicianEffectPattern()
     {
+        if (animState == "jab1")
+        {
+            Vector3 make_position = new Vector3(playerTransform.position.x + (playerTransform.forward.x * 2), playerTransform.position.y + 2.5f, playerTransform.position.z + (playerTransform.forward.z * 2));
+            GameObject obj = Instantiate(effectPrefab1, make_position, playerTransform.rotation);
+            obj.GetComponent<MagicShotController>().setThrowPower(new Vector3(playerTransform.forward.x * 30.0f, 0.0f, playerTransform.forward.z * 30.0f));
+            obj.GetComponent<MagicShotController>().setPID(playerID);
+            obj.GetComponent<MagicShotController>().setDamage(5.0f);
+        }
+
+        if (animState == "tilt1")
+        {
+            Invoke("magicianEffectPattern_tilt1", 0.5f);
+        }
+
+        if (animState == "tilt2_1")
+        {
+            magicianEffectPattern_tilt2(new Vector3(0.0f, 0.0f, -4.0f));
+            magicianEffectPattern_tilt2(new Vector3(4.0f, 0.0f, -0.5f));
+            magicianEffectPattern_tilt2(new Vector3(-4.0f, 0.0f, -0.5f));
+            magicianEffectPattern_tilt2(new Vector3(2.5f, 0.0f, 4.0f));
+            magicianEffectPattern_tilt2(new Vector3(-2.5f, 0.0f, 4.0f));
+        }
+
+        if (animState == "ult")
+        {
+            Vector3 make_position = new Vector3(playerTransform.position.x, playerTransform.position.y + 0.2f, playerTransform.position.z);
+            GameObject obj = Instantiate(effectPrefab4, make_position, playerTransform.rotation);
+            obj.GetComponent<ParticleColliderController1>().setPID(playerID);
+            obj.GetComponent<ParticleColliderController1>().setDamage(0.0f);
+
+            Transform make_transform = GetComponent<PlayerTargetController>().getTargetTransform();
+            GameObject obj2 = Instantiate(effectPrefab5, make_transform.position, make_transform.rotation);
+            obj2.GetComponent<ParticleColliderController2>().setPID(playerID);
+            obj2.GetComponent<ParticleColliderController2>().setForwardVelocity(new Vector3(0, 0, 0));
+            obj2.GetComponent<ParticleColliderController2>().setDamage(0.0f);
+
+            ParticleColliderController2 explosion = GameObject.Find("Explosion").GetComponent<ParticleColliderController2>();
+            explosion.setPID(playerID);
+            explosion.setForwardVelocity(new Vector3(0, 0, 0));
+            explosion.setDamage(50.0f);
+        }
+    }
+    // 魔法使い強攻撃１ - ホーミング弾
+    void magicianEffectPattern_tilt1()
+    {
+        Vector3 make_position = new Vector3(playerTransform.position.x + (playerTransform.forward.x * 2), playerTransform.position.y + 2.5f, playerTransform.position.z + (playerTransform.forward.z * 2));
+        GameObject obj = Instantiate(effectPrefab1, make_position, playerTransform.rotation);
+        obj.GetComponent<MagicShotController>().setThrowPower(new Vector3(playerTransform.forward.x * 10.0f, 0.0f, playerTransform.forward.z * 10.0f));
+        obj.GetComponent<MagicShotController>().setPID(playerID);
+        obj.GetComponent<MagicShotController>().setDamage(5.0f);
+    }
+    // 魔法使い強攻撃２ - 火柱
+    void magicianEffectPattern_tilt2(Vector3 offset)
+    {
+        Transform make_transform = GetComponent<PlayerTargetController>().getTargetTransform();
+        GameObject obj = Instantiate(effectPrefab3, make_transform.position + offset, make_transform.rotation);
+        obj.GetComponent<ParticleColliderController1>().setPID(playerID);
+        obj.GetComponent<ParticleColliderController1>().setDamage(5.0f);
     }
 
     //ダメージ発生関数１

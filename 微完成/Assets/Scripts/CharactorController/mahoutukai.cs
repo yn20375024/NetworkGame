@@ -85,18 +85,6 @@ public class mahoutukai : NetworkBehaviour
                 rb.velocity = Vector3.zero;
                 m_Animator.animator.SetInteger("Jab_Seq", 1);
             }
-            /*            else if ((m_Animator.animator.GetInteger("Jab_Seq") == 1) && (PE_Control.getAnim() == "jabwait1") || (PE_Control.getAnim() == "jab1"))
-                        {
-                            m_Animator.animator.SetInteger("Jab_Seq", 2);
-                        }
-                        else if ((m_Animator.animator.GetInteger("Jab_Seq") == 2) && (PE_Control.getAnim() == "jabwait2") || (PE_Control.getAnim() == "jab2"))
-                        {
-                            m_Animator.animator.SetInteger("Jab_Seq", 3);
-                        }
-                        else
-                        {
-                            m_Animator.animator.SetInteger("Jab_Seq", 0);
-                        }*/
         }
 
         //【 △　強攻撃１ 】
@@ -112,10 +100,7 @@ public class mahoutukai : NetworkBehaviour
             && (PE_Control.getAnim() == "walk" || PE_Control.getAnim() == "stay"))
         {
             rb.velocity = Vector3.zero;
-            if (m_Animator.animator.GetInteger("Tilt2_Seq") == 0)
-            {
-                m_Animator.animator.SetInteger("Tilt2_Seq", 1);
-            }
+            m_Animator.animator.SetBool("Tilt2_Flg", true);
         }
 
         //【 ×　ジャンプ 】
@@ -176,53 +161,37 @@ public class mahoutukai : NetworkBehaviour
     //アニメーションフラグのリセット
     void EndFlgReset()
     {
-        //end時、アニメーションのフラグをfalseにする
-        if (PE_Control.getAnim() == "tilt1end")
-        {
-            m_Animator.animator.SetBool("Tilt1_Flg", false);
-        }
-        //end時、アニメーションのフラグをfalseにする
-        if (PE_Control.getAnim() == "damage1end")
+        if (PE_Control.getAnim() == "start")
         {
             m_Animator.animator.SetBool("Damage1_Flg", false);
-        }
-        //end時、アニメーションのフラグをfalseにする
-        if (PE_Control.getAnim() == "tilt2end")
-        {
-            m_Animator.animator.SetBool("Tilt2_Counter_Flg", false);
-        }
-        //end時、アニメーションのフラグをfalseにする
-        if (PE_Control.getAnim() == "dashend")
-        {
-            m_Animator.animator.SetBool("Dash_Flg", false);
-            m_Animator.animator.SetInteger("WalkTrigger", 2);
-        }
-        //end時、アニメーションのフラグカウントを0にする
-        if (PE_Control.getAnim() == "jabend")
-        {
-            m_Animator.animator.SetInteger("Jab_Seq", 0);
-        }
-        //end時、アニメーションのフラグカウントを0にする
-        if (PE_Control.getAnim() == "tilt2end")
-        {
-            m_Animator.animator.SetInteger("Tilt2_Seq", 0);
-        }
-        //end時、アニメーションのフラグカウントを0にする
-        if (PE_Control.getAnim() == "jumpout")
-        {
-            m_Animator.animator.SetInteger("Jump_Seq", 0);
-            m_Animator.animator.SetInteger("WalkTrigger", 2);
-        }
-        //end時、アニメーションのフラグカウントを0にする
-        if (PE_Control.getAnim() == "damage2-3end")
-        {
             m_Animator.animator.SetInteger("Damage2-3_Seq", 0);
-        }
-        //end時、アニメーションのフラグカウントを0にする
-        if (PE_Control.getAnim() == "ultend")
-        {
+            m_Animator.animator.SetBool("Tilt1_Flg", false);
+            m_Animator.animator.SetBool("Tilt2_Flg", false);
+            m_Animator.animator.SetInteger("WalkTrigger", 2);
+            m_Animator.animator.SetBool("Dash_Flg", false);
+            m_Animator.animator.SetInteger("Jab_Seq", 0);
+            m_Animator.animator.SetInteger("Jump_Seq", 0);
             m_Animator.animator.SetInteger("Ult", 0);
             lrcheck2 = 0;
+            m_Animator.animator.SetBool("End_Flg", false);
+            m_Animator.animator.SetBool("Start_Flg", true);
+        }
+        else if (PE_Control.getAnim() == "end")
+        {
+            m_Animator.animator.SetBool("Start_Flg", false);
+            m_Animator.animator.SetBool("End_Flg", true);
+        }
+
+        if (PE_Control.getAnim() == "damage1")
+        {
+            Debug.Log("d1-in");
+            m_Animator.animator.SetBool("Damage1_Flg", false);
+        }
+
+        if (PE_Control.getAnim() == "damage2")
+        {
+            Debug.Log("d2-in");
+            m_Animator.animator.SetInteger("Damage2-3_Seq", 2);
         }
     }
 
@@ -356,15 +325,17 @@ public class mahoutukai : NetworkBehaviour
                 m_Animator.animator.SetInteger("Jump_Seq", 3);
             }
         }
+
         // 吹き飛び常時処理
-        if (m_Animator.animator.GetInteger("Damage2-3_Seq") == 1)
+        if (m_Animator.animator.GetInteger("Damage2-3_Seq") == 2)
         {
             //着地
-            if ((rb.velocity.y == 0) || (checkIsGround(rb.position, 0.3f) == true))
+            if ((rb.velocity.y == 0) || (checkIsGround(rb.position, 1.0f) == true))
             {
-                m_Animator.animator.SetInteger("Damage2-3_Seq", 2);
+                m_Animator.animator.SetInteger("Damage2-3_Seq", 3);
             }
         }
+
         // L2R2アニメーション（長押し用）
         if (lrcheck2 == 1)
         {

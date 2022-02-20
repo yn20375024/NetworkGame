@@ -337,7 +337,6 @@ public class naginata : NetworkBehaviour
             }
         }
 
-
         // 吹き飛び常時処理
         if (m_Animator.animator.GetInteger("Damage2-3_Seq") == 2)
         {
@@ -347,7 +346,6 @@ public class naginata : NetworkBehaviour
                 m_Animator.animator.SetInteger("Damage2-3_Seq", 3);
             }
         }
-
 
         // L2R2アニメーション（長押し用）
         if (lrcheck2 == 1)

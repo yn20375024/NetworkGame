@@ -194,4 +194,9 @@ public class PlayerTargetController : NetworkBehaviour
         GameObject MyCamera = GameObject.Find("CameraManager");
         MyCamera.GetComponent<FollowAndLookAtTarget>().LookAt = TargetTransform;
     }
+
+    public Transform getTargetTransform()
+    {
+        return TargetTransform;
+    }
 }

@@ -5,18 +5,24 @@ using UnityEngine;
 public class ImpactController : MonoBehaviour
 {
     private string state;
-    private string playerName;
     private PlayerEffectController player;
-
-    private uint playerID;
-    private Transform objTransform;
-    private bool kb_flg = false;
+    private uint myPID;
 
     // Start is called before the first frame update
     void Start()
     {
-        GameObject searchPlayer = GameObject.Find(playerName);
-        player = searchPlayer.GetComponent<PlayerEffectController>();
+        int playerNum;
+        GameObject[] searchPlayers = GameObject.FindGameObjectsWithTag("Player");
+        playerNum = searchPlayers.Length;
+
+        for (int i = 0; i < playerNum; i++)
+        {
+            if (searchPlayers[i].GetComponent<PlayerEffectController>().getPID() == myPID)
+            {
+                player = searchPlayers[i].GetComponent<PlayerEffectController>();
+                break;
+            }
+        }
     }
 
     // Update is called once per frame
@@ -51,13 +57,13 @@ public class ImpactController : MonoBehaviour
         state = setState;
     }
 
-    public void setPlayerName(string setPlayerName)
+    public void setPID(uint setPID)
     {
-        playerName = setPlayerName;
+        myPID = setPID;
     }
 
     // 当たり判定
-    private uint myPID;
+    private bool kb_flg = false;
     private float damage;
     private Vector3 forwardVelocity;
 
@@ -84,11 +90,6 @@ public class ImpactController : MonoBehaviour
     public void setDamage(float setDamage)
     {
         damage = setDamage;
-    }
-
-    public void setPID(uint setMyPID)
-    {
-        myPID = setMyPID;
     }
 
     public void setForwardVelocity(Vector3 setForwardVelocity)
